@@ -1,21 +1,20 @@
-﻿using System.Data.SqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace ERPApplication.DataAccessLayer
+namespace WebApplication.DAL
 {
-   public class DataAccessLayer
+    public class DataAccessLayer
     {
 
-       
+
             public void PrintAllProductCategory()
             {
                 using (SqlConnection connection = ConnectionHandler.GetDatabaseConnection())
                 using (SqlCommand command = connection.CreateCommand())
-              
+
                 {
                     command.CommandText = "INSERT INTO [CRONUS Sverige AB$Employee] ([First Name], [Middle Name]) VALUES ('John', 'Smith'), ('Jane', 'Doe')";
 
@@ -27,9 +26,10 @@ namespace ERPApplication.DataAccessLayer
                     connection.Dispose();
 
                 }
-               
+
 
             }
-            }
         }
-    
+    }
+
+
