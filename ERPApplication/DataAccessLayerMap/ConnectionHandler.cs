@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,14 +10,19 @@ namespace ERPApplication.DataAccessLayer
 {
     public class ConnectionHandler
     {
-            public static SqlConnection GetSqlServerConnection()
+
+       
+            public static SqlConnection GetDatabaseConnection()
             {
-                string connectionString = ConfigurationManager.ConnectionStrings["DemoDatabaseNAV(5-0)ConnectionStrings"].ConnectionString;
-                var builder = new SqlConnectionStringBuilder(connectionString);
-                var connection = new SqlConnection(builder.ConnectionString);
+                string connectionString = ConfigurationManager.ConnectionStrings["DemoDatabaseNAV(5-0)DBConnectionString"].ConnectionString;
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
+                SqlConnection connection = new SqlConnection(builder.ConnectionString);
                 return connection;
             }
         }
-
     }
+
+    
+
+
 
