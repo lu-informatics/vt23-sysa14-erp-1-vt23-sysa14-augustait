@@ -3,33 +3,33 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Xml.Linq;
 
 namespace WebApplication.DAL
 {
     public class DataAccessLayer
-    {
-
-
-            public void PrintAllProductCategory()
+    { 
+            public static List<Employee> GetEmployees()
             {
-                using (SqlConnection connection = ConnectionHandler.GetDatabaseConnection())
-                using (SqlCommand command = connection.CreateCommand())
-
+                var employees = new List<Employee>();
+                using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
                 {
-                    command.CommandText = "INSERT INTO [CRONUS Sverige AB$Employee] ([First Name], [Middle Name]) VALUES ('John', 'Smith'), ('Jane', 'Doe')";
-
-                    connection.Open();
-
-                    command.ExecuteNonQuery();
-
-                    connection.Close();
-                    connection.Dispose();
-
+                connection.Open();
+                string query = "SELECT [No_], [First Name] FROM [CRONUS Sverige AB$Employee] WHERE No_ = 'AB'";
+                var command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var employee = new Employee();
+                        employee.No = reader["No_"] as string;
+                        employee.FirstName = reader["First Name"] as string;
+                      
+                        
+                        employees.Add(employee);
+                    }
                 }
-
-
+                return employees;
             }
         }
-    }
-
+}
 

@@ -57,49 +57,14 @@ namespace WebApplication
 
         }
 
-        [WebMethod(Description = "Here you have the option to find an Employee ")]
-
-        public string HelloT()
+        [WebMethod(Description = "Returns a list of all employees and their respective departments")]
+        public List<Employee> GetEmployees()
         {
-            return "Hello Test";
-
-
+            List<Employee> employees = DAL.DataAccessLayer.GetEmployees();
+            return employees;
         }
 
-        [WebMethod(Description = "Click on this button to view all the names of the columns in the database! ")]
-
-        public string Hello()
-        {
-            return "Hello Test";
-
-
-        }
-
-        [WebMethod(Description = "Click on this button to view the total number of tables in the database! ")]
-
-        public string Hell()
-        {
-            return "Hello Test";
-
-
-        }
-
-        [WebMethod(Description = "Click on this button to view the total number of columns in the database! ")]
-
-        public string Hel()
-        {
-            return "Hello Test";
-
-
-        }
-
-        [WebMethod(Description = "Click on this button to view all the Primary Keys in the database! ")]
-
-        public string Hl()
-        {
-            return "Hello Test";
-
-
-        }
     }
 }
+
+      

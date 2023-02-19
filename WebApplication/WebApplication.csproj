@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="DAL\ConnectionHandler.cs" />
     <Compile Include="DAL\DataAccessLayer.cs" />
+    <Compile Include="Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebApplication.asmx.cs">
       <DependentUpon>WebApplication.asmx</DependentUpon>
