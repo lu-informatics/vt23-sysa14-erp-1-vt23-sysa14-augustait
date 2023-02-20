@@ -18,58 +18,44 @@ namespace WebApplication
     public class WebApplication : System.Web.Services.WebService
     {
 
-        [WebMethod]
-        public string HelloWorld()
-        {
-            return "Hello World";
-        }
-
-        [WebMethod]
-        public string HelloSoap()
-        {
-            return "Hello Soap";
-        }
-
-        [WebMethod(Description = "Here you have the option to create an Employee! ")]
-
-        public string HelloTest()
-        {
-            return "Hello Test";
-
-
-        }
-
-        [WebMethod(Description = "Here you have the option to update an Employee ")]
-
-        public string HelloTes()
-        {
-            return "Hello Test";
-
-
-        }
-
-        [WebMethod(Description = "Here you have the option to delete an Employee ")]
-
-        public string HelloTe()
-        {
-            return "Hello Test";
-
-
-        }
-
-        [WebMethod(Description = "Returns a list of all employees and their respective departments")]
-        public List<Employee> GetEmployees()
-        {
-            List<Employee> employees = DAL.DataAccessLayer.GetEmployees();
-            return employees;
-        }
-
+  
         [WebMethod(Description = "Returns an employee with the specified id")]
-        public Employee GetEmployeeById(string no)
+        public Employee GetEmployeeByNo(string no)
         {
             Employee employee = DAL.DataAccessLayer.GetEmployeeByNo(no);
             return employee;
         }
-    }
+
+        [WebMethod(Description = "Returns the number of all tables in the database! ")]
+
+        public int GetTableCount()
+        {
+            return DataAccessLayer.TableCount();
+        }
+
+       
+        [WebMethod(Description = "Create an Employee with this button! ")]
+        public void AddEmployee(string no, string firstName, string lastName, string jobTitle, string city)
+        {
+            Employee employee = new Employee();
+            employee.No = no;
+            employee.FirstName = firstName;
+            employee.LastName = lastName;
+            employee.JobTitle = jobTitle;
+            employee.City = city;
+
+            DAL.DataAccessLayer.CreateEmployee(employee);
+        }
+
+        [WebMethod(Description = "Delete an Employee with this button! ")]
+        public void DeleteEmployee (string no)
+        {
+            
+
+         DAL.DataAccessLayer.DeleteEmployee(no);
+           
+
+        }
+}
 }
 
