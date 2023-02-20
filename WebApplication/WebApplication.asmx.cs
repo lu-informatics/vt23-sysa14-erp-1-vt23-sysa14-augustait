@@ -64,7 +64,12 @@ namespace WebApplication
             return employees;
         }
 
+        [WebMethod(Description = "Returns an employee with the specified id")]
+        public Employee GetEmployeeById(string no)
+        {
+            Employee employee = DAL.DataAccessLayer.GetEmployeeByNo(no);
+            return employee;
+        }
     }
 }
 
-      
