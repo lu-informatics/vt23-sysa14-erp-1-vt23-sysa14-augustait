@@ -69,6 +69,55 @@ public static Employee GetEmployeeByNo(string no)
             return count;
         }
 
+        public static int ColumnCount()
+        {
+            int count = 0;
+            using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
+            {
+                connection.Open();
+                string query = "SELECT SUM(column_count) FROM (SELECT COUNT(*) as column_count FROM INFORMATION_SCHEMA.COLUMNS GROUP BY TABLE_NAME) as column_counts";
+                var command = new SqlCommand(query, connection);
+                count = (int)command.ExecuteScalar();
+            }
+            return count;
+        }
+
+        public static List<string> GetPrimaryKeyConstraintNames()
+        {
+            List<string> constraintNames = new List<string>();
+            using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
+            {
+                connection.Open();
+                string query = "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_TYPE = 'PRIMARY KEY'";
+                var command = new SqlCommand(query, connection);
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    constraintNames.Add(reader["CONSTRAINT_NAME"].ToString());
+                }
+            }
+            return constraintNames;
+        }
+
+        public static List<string> GetItemTableColumnNames()
+        {
+            List<string> columnNames = new List<string>();
+            using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
+            {
+                connection.Open();
+                string query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'CRONUS Sverige AB$Item'";
+                var command = new SqlCommand(query, connection);
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    columnNames.Add(reader["COLUMN_NAME"].ToString());
+                }
+            }
+            return columnNames;
+        }
+
+
+
         public static void CreateEmployee(Employee employee)
         {
             using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())

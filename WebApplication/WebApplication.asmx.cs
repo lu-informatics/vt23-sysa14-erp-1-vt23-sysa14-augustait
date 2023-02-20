@@ -33,7 +33,26 @@ namespace WebApplication
             return DataAccessLayer.TableCount();
         }
 
-       
+        [WebMethod(Description = "Returns the number of all columns in the database! ")]
+
+        public int GetColumnCount()
+        {
+            return DataAccessLayer.ColumnCount();
+        }
+
+        [WebMethod(Description = "Returns the names of all the Primary Keys in the database! ")]
+        public List<string> GetPrimaryKeyConstraints()
+        {
+            return DataAccessLayer.GetPrimaryKeyConstraintNames();
+        }
+
+
+        [WebMethod(Description = "Returns the names of all the Columns in the CRONUS Sverige AB$Item table! ")]
+        public List<string> GetItemTableColumnNames()
+        {
+            return DataAccessLayer.GetItemTableColumnNames();
+        }
+
         [WebMethod(Description = "Create an Employee with this button! ")]
         public void AddEmployee(string no, string firstName, string lastName, string jobTitle, string city)
         {
@@ -56,6 +75,8 @@ namespace WebApplication
            
 
         }
+
+
 }
 }
 
