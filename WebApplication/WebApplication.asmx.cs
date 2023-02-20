@@ -20,7 +20,7 @@ namespace WebApplication
 
   
         [WebMethod(Description = "Returns an employee with the specified id")]
-        public Employee GetEmployeeByNo(string no)
+        public Employee FindEmployeeByNo(string no)
         {
             Employee employee = DAL.DataAccessLayer.GetEmployeeByNo(no);
             return employee;
