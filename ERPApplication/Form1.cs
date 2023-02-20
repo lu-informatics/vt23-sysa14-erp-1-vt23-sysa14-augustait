@@ -27,12 +27,47 @@ namespace ERPApplication
         }
 
 
+      
+        
 
+        private void button8_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void DeleteEmployee_click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void FindEmployee_click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void UpdateEmployee_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CreateEmployee_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NamesOfAllColumns_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TotalNumberOf_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AllPrimaryKeys_Click(object sender, EventArgs e)
+        {
+
+        }
     }
     }
