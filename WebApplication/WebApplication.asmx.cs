@@ -18,8 +18,8 @@ namespace WebApplication
     public class WebApplication : System.Web.Services.WebService
     {
 
-  
         [WebMethod(Description = "Returns an employee with the specified id")]
+
         public Employee FindEmployeeByNo(string no)
         {
             Employee employee = DAL.DataAccessLayer.GetEmployeeByNo(no);
@@ -67,16 +67,16 @@ namespace WebApplication
         }
 
         [WebMethod(Description = "Delete an Employee with this button! ")]
-        public void DeleteEmployee (string no)
+        public void DeleteEmployee(string no)
         {
-            
 
-         DAL.DataAccessLayer.DeleteEmployee(no);
-           
+
+            DAL.DataAccessLayer.DeleteEmployee(no);
+
 
         }
 
 
-}
+    }
 }
 
