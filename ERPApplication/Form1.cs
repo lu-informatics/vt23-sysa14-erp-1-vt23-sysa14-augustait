@@ -50,8 +50,8 @@ namespace ERPApplication
             string employeeNo = textBoxNbr.Text;
 
             // Check if employee exists before deleting
-            bool employeeExists = DAL.DataAccessLayer.EmployeeExists(employeeNo);
-
+            bool employeeExists = webApplication.EmployeeExists(employeeNo);
+           
             if (!employeeExists)
             {
                 richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
