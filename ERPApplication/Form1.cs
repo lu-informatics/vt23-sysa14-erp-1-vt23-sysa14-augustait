@@ -37,7 +37,24 @@ namespace ERPApplication
 
         private void DeleteEmployee_click(object sender, EventArgs e)
         {
+            try
+            {
+                string employeeId = textBoxNbr.Text;
 
+
+                // Call the DeleteEmployee web method of the Web Service
+                var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+                WebApplicationSoapClient webApplication = new(endpointConfiguration);
+                webApplication.DeleteEmployee(employeeId);
+
+                // Display a success message to the user
+                MessageBox.Show("Employee deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that might occur during the deletion process
+                MessageBox.Show("Error deleting employee: " + ex.Message);
+            }
         }
 
         private void FindEmployee_click(object sender, EventArgs e)
