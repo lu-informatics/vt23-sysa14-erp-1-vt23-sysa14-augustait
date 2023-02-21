@@ -76,7 +76,21 @@ namespace WebApplication
 
         }
 
+        [WebMethod(Description = "Update an Employee with this button! ")]
+        public void UpdateEmployee(string no, string firstName, string lastName, string jobTitle, string city)
+        {
+            Employee employee = new Employee();
+            employee.No = no;
+            employee.FirstName = firstName;
+            employee.LastName = lastName;
+            employee.JobTitle = jobTitle;
+            employee.City = city;
 
-}
+            DAL.DataAccessLayer.UpdateEmployee(employee);
+        }
+
+
+
+    }
 }
 
