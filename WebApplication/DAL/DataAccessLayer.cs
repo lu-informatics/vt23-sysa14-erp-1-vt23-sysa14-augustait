@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Xml.Linq;
 
@@ -149,13 +150,32 @@ public static Employee GetEmployeeByNo(string no)
 
                 command.ExecuteNonQuery();
 
-
-
-
-
             }
         }
-    }
+
+        public static void UpdateEmployee(Employee employee)
+            {
+                using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
+                {
+                    connection.Open();
+
+                string query = "UPDATE[CRONUS Sverige AB$Employee] SET[First Name] = @FirstName, [Last Name] = @LastName,  [Job Title] = @JobTitle,  [City] = @City  WHERE No_ = @No_";
+                    var command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@No_", employee.No);
+                    command.Parameters.AddWithValue("@FirstName", employee.FirstName);
+                    command.Parameters.AddWithValue("@LastName", employee.LastName);
+                    command.Parameters.AddWithValue("@JobTitle", employee.JobTitle);
+                    command.Parameters.AddWithValue("@City", employee.City);
+
+                    command.ExecuteNonQuery();
+                }
+
+            }
+
+
+        }
 }
+    
+
 
 
