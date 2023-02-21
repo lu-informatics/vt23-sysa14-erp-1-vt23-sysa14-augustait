@@ -192,7 +192,7 @@
             // 
             // textBoxNbr
             // 
-            this.textBoxNbr.Location = new System.Drawing.Point(370, 296);
+            this.textBoxNbr.Location = new System.Drawing.Point(8, 296);
             this.textBoxNbr.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxNbr.Name = "textBoxNbr";
             this.textBoxNbr.PlaceholderText = "ID:";
@@ -201,7 +201,7 @@
             // 
             // textBoxLastName
             // 
-            this.textBoxLastName.Location = new System.Drawing.Point(187, 296);
+            this.textBoxLastName.Location = new System.Drawing.Point(363, 296);
             this.textBoxLastName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxLastName.Name = "textBoxLastName";
             this.textBoxLastName.PlaceholderText = "Last Name";
@@ -210,7 +210,7 @@
             // 
             // textBoxFirstName
             // 
-            this.textBoxFirstName.Location = new System.Drawing.Point(8, 296);
+            this.textBoxFirstName.Location = new System.Drawing.Point(189, 296);
             this.textBoxFirstName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxFirstName.Name = "textBoxFirstName";
             this.textBoxFirstName.PlaceholderText = "First name:";
