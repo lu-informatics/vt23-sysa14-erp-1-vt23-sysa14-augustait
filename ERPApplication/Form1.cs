@@ -1,5 +1,9 @@
 using ERPServiceReference;
+using System.Data.Common;
+using System.Data;
 using System.Windows.Forms;
+using static ERPServiceReference.WebApplicationSoapClient;
+using System.ServiceModel;
 
 namespace ERPApplication
 {
@@ -38,61 +42,31 @@ namespace ERPApplication
         }
 
         // DELETE Employee
-        private void DeleteEmployee_click(object sender, EventArgs e)
+        private void DeleteEmployee_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Get the ID of the employee to be deleted from the user through the GUI
-                string employeeId = textBoxNbr.Text;
+            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+            WebApplicationSoapClient webApplication = new(endpointConfiguration);
 
-                // Call the DeleteEmployee web method of the Web Service
-                var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-                WebApplicationSoapClient webApplication = new(endpointConfiguration);
-                webApplication.DeleteEmployee(employeeId);
+            string employeeNo = textBoxNbr.Text;
 
-                // Display a success message to the user
-                MessageBox.Show("Employee deleted successfully.");
-            }
-            catch (System.ServiceModel.FaultException ex)
+            // Check if employee exists before deleting
+            bool employeeExists = DAL.DataAccessLayer.EmployeeExists(employeeNo);
+
+            if (!employeeExists)
             {
-                if (ex.Message.Contains("Violation of PRIMARY KEY constraint"))
-                {
-                    MessageBox.Show("Error deleting employee: The employee ID does not exist.");
-                }
-                else
-                {
-                    MessageBox.Show("Error deleting employee: " + ex.Message);
-                }
+                richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
+                return;
             }
+
+            webApplication.DeleteEmployee(employeeNo);
+            richTextBox.AppendText($"Employee with No. {employeeNo} has been deleted successfully.\n");
         }
 
         // FIND Employee
-        //private void FindEmployee_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        string employeeId = textBoxNbr.Text;
-        //        var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-        //        WebApplicationSoapClient webApplication = new(endpointConfiguration);
-        //        Employee employee = webApplication.FindEmployeeByNo(employeeId);
-
-        //        if (employee != null)
-        //        {
-        //            textBoxFirstName.Text = employee.FirstName;
-        //            textBoxLastName.Text = employee.LastName;
-        //            textBoxJobTitle.Text = employee.JobTitle;
-        //            textBoxCity.Text = employee.City;
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Employee not found.");
-        //        }
-        //    }
-        //    catch (System.ServiceModel.FaultException ex)
-        //    {
-        //        MessageBox.Show("Error finding employee: " + ex.Message);
-        //    }
-        //}
+        private void FindEmployee_Click(object sender, EventArgs e)
+        {
+        
+        }
 
         private void UpdateEmployee_Click(object sender, EventArgs e)
         {
@@ -106,17 +80,54 @@ namespace ERPApplication
 
         private void NamesOfAllColumns_Click(object sender, EventArgs e)
         {
+            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+            WebApplicationSoapClient webApplication = new(endpointConfiguration);
+            List<string> columnNames = webApplication.GetItemTableColumnNames().ToList();
 
-        }
-
-        private void TotalNumberOf_Click(object sender, EventArgs e)
-        {
-
+            // Add column names to the RichTextBox
+            richTextBox.Clear();
+            richTextBox.AppendText("Names of all columns in the CRONUS Sverige AB$Item table:\n\n"); 
+            foreach (string columnName in columnNames)
+            {
+                richTextBox.AppendText(columnName + "\n");
+            }
         }
 
         private void AllPrimaryKeys_Click(object sender, EventArgs e)
         {
+            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+            WebApplicationSoapClient webApplication = new(endpointConfiguration);
+            List<string> constraintNames = webApplication.GetPrimaryKeyConstraints().ToList();
 
+            // Display constraint names in RichTextBox
+            richTextBox.Clear();
+            richTextBox.Text = "Names of all the primary key constraints in the database: \n\n";
+            foreach (string constraintName in constraintNames)
+            {
+                richTextBox.AppendText(constraintName + "\n");
+            }
         }
+
+
+        private void TotalNumberOfTables_Click(object sender, EventArgs e)
+        {
+            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+            WebApplicationSoapClient webApplication = new WebApplicationSoapClient(endpointConfiguration);
+
+            int tableCount = webApplication.GetTableCount();
+            richTextBox.Clear();
+            richTextBox.AppendText($"Total number of tables in the database: {tableCount}");
+        }
+
+        private void TotalNumberOfColumns(object sender, EventArgs e)
+        {
+            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+            WebApplicationSoapClient webApplication = new(endpointConfiguration);
+
+            int columnCount = webApplication.GetColumnCount();
+            richTextBox.Clear();
+            richTextBox.AppendText($"The total number of columns in the database is: {columnCount}\n");
+        }
+
     }
     }
