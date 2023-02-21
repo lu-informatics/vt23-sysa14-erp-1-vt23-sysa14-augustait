@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.EmployeeDataGridView = new System.Windows.Forms.DataGridView();
+            this.richTextBox = new System.Windows.Forms.RichTextBox();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -45,13 +45,12 @@
             this.textBoxFirstName = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EmployeeDataGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.EmployeeDataGridView);
+            this.tabPage1.Controls.Add(this.richTextBox);
             this.tabPage1.Controls.Add(this.button8);
             this.tabPage1.Controls.Add(this.button7);
             this.tabPage1.Controls.Add(this.button6);
@@ -74,23 +73,20 @@
             this.tabPage1.Text = "Employee";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // EmployeeDataGridView
+            // richTextBox
             // 
-            this.EmployeeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.EmployeeDataGridView.Location = new System.Drawing.Point(3, 0);
-            this.EmployeeDataGridView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.EmployeeDataGridView.Name = "EmployeeDataGridView";
-            this.EmployeeDataGridView.RowHeadersWidth = 51;
-            this.EmployeeDataGridView.RowTemplate.Height = 25;
-            this.EmployeeDataGridView.Size = new System.Drawing.Size(887, 200);
-            this.EmployeeDataGridView.TabIndex = 13;
+            this.richTextBox.Location = new System.Drawing.Point(35, 27);
+            this.richTextBox.Name = "richTextBox";
+            this.richTextBox.Size = new System.Drawing.Size(824, 226);
+            this.richTextBox.TabIndex = 13;
+            this.richTextBox.Text = "";
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(745, 507);
+            this.button8.Location = new System.Drawing.Point(743, 507);
             this.button8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(114, 31);
+            this.button8.Size = new System.Drawing.Size(142, 31);
             this.button8.TabIndex = 12;
             this.button8.Text = "All Primary Keys";
             this.button8.UseVisualStyleBackColor = true;
@@ -98,28 +94,29 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(544, 507);
+            this.button7.Location = new System.Drawing.Point(526, 507);
             this.button7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(186, 31);
+            this.button7.Size = new System.Drawing.Size(195, 31);
             this.button7.TabIndex = 11;
             this.button7.Text = "Total Number Of Columns";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.TotalNumberOfColumns);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(346, 507);
+            this.button6.Location = new System.Drawing.Point(307, 507);
             this.button6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(171, 31);
+            this.button6.Size = new System.Drawing.Size(192, 31);
             this.button6.TabIndex = 10;
             this.button6.Text = "Total Number Of Tables";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.TotalNumberOf_Click);
+            this.button6.Click += new System.EventHandler(this.TotalNumberOfTables_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(149, 507);
+            this.button5.Location = new System.Drawing.Point(119, 507);
             this.button5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(168, 31);
@@ -148,7 +145,7 @@
             this.button3.TabIndex = 7;
             this.button3.Text = "Delete";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.DeleteEmployee_click);
+            this.button3.Click += new System.EventHandler(this.DeleteEmployee_Click);
             // 
             // button2
             // 
@@ -159,7 +156,6 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "Find";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.FindEmployee_click);
             // 
             // button1
             // 
@@ -238,7 +234,6 @@
             this.Text = "CRONUS Sverige AB";
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EmployeeDataGridView)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -261,6 +256,6 @@
         private Button button7;
         private Button button6;
         private Button button5;
-        private DataGridView EmployeeDataGridView;
+        private RichTextBox richTextBox;
     }
 }
