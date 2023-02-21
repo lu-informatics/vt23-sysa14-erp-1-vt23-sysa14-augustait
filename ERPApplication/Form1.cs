@@ -41,37 +41,62 @@ namespace ERPApplication
 
         }
 
-        // DELETE Employee
-        private void DeleteEmployee_Click(object sender, EventArgs e)
-        {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
+        // DELETE Employee - HAR INGEN REFERENS
+      
+        //private void DeleteEmployee_Click(object sender, EventArgs e)
+        //{
+        //    var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+        //    WebApplicationSoapClient webApplication = new(endpointConfiguration);
 
-            string employeeNo = textBoxNbr.Text;
+        //    string employeeNo = textBoxNbr.Text;
 
-            // Check if employee exists before deleting
-            bool employeeExists = webApplication.EmployeeExists(employeeNo);
+        //    // Check if employee exists before deleting
+        //    bool employeeExists = webApplication.EmployeeExists(employeeNo);
            
-            if (!employeeExists)
-            {
-                richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
-                return;
-            }
+        //    if (!employeeExists)
+        //    {
+        //        richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
+        //        return;
+        //    }
 
-            webApplication.DeleteEmployee(employeeNo);
-            richTextBox.AppendText($"Employee with No. {employeeNo} has been deleted successfully.\n");
-        }
+        //    webApplication.DeleteEmployee(employeeNo);
+        //    richTextBox.AppendText($"Employee with No. {employeeNo} has been deleted successfully.\n");
+        //}
 
         // FIND Employee
-        private void FindEmployee_Click(object sender, EventArgs e)
-        {
-        
-        }
+       
 
         private void UpdateEmployee_Click(object sender, EventArgs e)
         {
 
         }
+
+
+        //private void FindEmployee_Click(object sender, EventArgs e)
+        //{
+        //    var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+        //    WebApplicationSoapClient webApplication = new(endpointConfiguration);
+
+        //    string employeeNo = textBoxNbr.Text;
+
+        //    // Call the FindEmployeeByNo method in WebApplication to retrieve the employee
+        //    Employee employee = webApplication.FindEmployeeByNo(employeeNo);
+
+        //    // Check if the employee exists
+        //    if (employee == null)
+        //    {
+        //        richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
+        //    }
+        //    else
+        //    {
+        //        // Display the employee information in the rich text box
+        //        richTextBox.AppendText($"No: {employee.No}\n");
+        //        richTextBox.AppendText($"First Name: {employee.FirstName}\n");
+        //        richTextBox.AppendText($"Last Name: {employee.LastName}\n");
+        //        richTextBox.AppendText($"Job Title: {employee.JobTitle}\n");
+        //        richTextBox.AppendText($"City: {employee.City}\n");
+        //    }
+        //}
 
         private void CreateEmployee_Click(object sender, EventArgs e)
         {
@@ -127,6 +152,11 @@ namespace ERPApplication
             int columnCount = webApplication.GetColumnCount();
             richTextBox.Clear();
             richTextBox.AppendText($"The total number of columns in the database is: {columnCount}\n");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

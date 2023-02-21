@@ -36,8 +36,8 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.FindEmployee = new System.Windows.Forms.Button();
+            this.AddEmployee = new System.Windows.Forms.Button();
             this.textBoxCity = new System.Windows.Forms.TextBox();
             this.textBoxJobTitle = new System.Windows.Forms.TextBox();
             this.textBoxNbr = new System.Windows.Forms.TextBox();
@@ -57,8 +57,8 @@
             this.tabPage1.Controls.Add(this.button5);
             this.tabPage1.Controls.Add(this.button4);
             this.tabPage1.Controls.Add(this.button3);
-            this.tabPage1.Controls.Add(this.button2);
-            this.tabPage1.Controls.Add(this.button1);
+            this.tabPage1.Controls.Add(this.FindEmployee);
+            this.tabPage1.Controls.Add(this.AddEmployee);
             this.tabPage1.Controls.Add(this.textBoxCity);
             this.tabPage1.Controls.Add(this.textBoxJobTitle);
             this.tabPage1.Controls.Add(this.textBoxNbr);
@@ -145,28 +145,28 @@
             this.button3.TabIndex = 7;
             this.button3.Text = "Delete";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.DeleteEmployee_Click);
             // 
-            // button2
+            // FindEmployee
             // 
-            this.button2.Location = new System.Drawing.Point(8, 405);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(86, 31);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Find";
-            this.button2.UseVisualStyleBackColor = true;
+            this.FindEmployee.Location = new System.Drawing.Point(8, 405);
+            this.FindEmployee.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FindEmployee.Name = "FindEmployee";
+            this.FindEmployee.Size = new System.Drawing.Size(86, 31);
+            this.FindEmployee.TabIndex = 6;
+            this.FindEmployee.Text = "Find";
+            this.FindEmployee.UseVisualStyleBackColor = true;
+           // this.FindEmployee.Click += new System.EventHandler(this.FindEmployee_Click);
             // 
-            // button1
+            // AddEmployee
             // 
-            this.button1.Location = new System.Drawing.Point(8, 355);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(86, 31);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Create";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.CreateEmployee_Click);
+            this.AddEmployee.Location = new System.Drawing.Point(8, 355);
+            this.AddEmployee.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.AddEmployee.Name = "AddEmployee";
+            this.AddEmployee.Size = new System.Drawing.Size(86, 31);
+            this.AddEmployee.TabIndex = 5;
+            this.AddEmployee.Text = "Create";
+            this.AddEmployee.UseVisualStyleBackColor = true;
+            this.AddEmployee.Click += new System.EventHandler(this.CreateEmployee_Click);
             // 
             // textBoxCity
             // 
@@ -244,8 +244,8 @@
         private TabPage tabPage1;
         private Button button4;
         private Button button3;
-        private Button button2;
-        private Button button1;
+        private Button FindEmployee;
+        private Button AddEmployee;
         private TextBox textBoxCity;
         private TextBox textBoxJobTitle;
         private TextBox textBoxNbr;
