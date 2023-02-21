@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Xml.Linq;
 
@@ -124,7 +125,17 @@ public static Employee GetEmployeeByNo(string no)
             {
                 connection.Open();
 
-                string query = "INSERT INTO [CRONUS Sverige AB$Employee] ([No_], [First Name], [Last Name], [Job Title], [City]) VALUES (@No_, @FirstName, @LastName, @JobTitle, @City)";
+                string query = "INSERT INTO [CRONUS Sverige AB$Employee] ([No_], [First Name], [Last Name], [Job Title], [City], " +
+                    " [Middle Name], [Initials], [Search Name], [Address 2], " +
+                    " [Post Code], [County], [Phone No_], [Mobile Phone No_], [Address], " +
+                    " [E-Mail], [Alt_ Address Code], [Alt_ Address Start Date], [Alt_ Address End Date], [Birth Date], " +
+                    " [Sex], [Social Security No_], [Picture], [Union Code], [Manager No_], " +
+                    " [Union Membership No_], [Extension], [Title], [No_ Series], " +
+                    " [Resource No_], [Global Dimension 1 Code], [Global Dimension 2 Code], [Termination Date], [Inactive Date], [Employment Date]," +
+                    " [Statistics Group Code], [Emplymt_ Contract Code], [Status], [Cause of Inactivity Code], [Grounds for Term_ Code], [Last Date Modified], [Pager], [Fax No_], [Company E-Mail], [Salespers__Purch_ Code]) " +
+
+                 "VALUES(@No_, @FirstName, @LastName, @JobTitle, @City, 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', '2023-02-16', '2023-02-16', '2023-02-16', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', '2023-02-16', '2023-02-16', '2023-02-16', 'AJ', 'AJ', 1, 'AJ', 'AJ', '2023-02-16', 'AJ', 'AJ', 'AJ@gmail.com', 'AJ')";
+
                 var command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@No_", employee.No);
                 command.Parameters.AddWithValue("@FirstName", employee.FirstName);
@@ -149,13 +160,32 @@ public static Employee GetEmployeeByNo(string no)
 
                 command.ExecuteNonQuery();
 
-
-
-
-
             }
         }
-    }
+
+        public static void UpdateEmployee(Employee employee)
+            {
+                using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
+                {
+                    connection.Open();
+
+                string query = "UPDATE[CRONUS Sverige AB$Employee] SET[First Name] = @FirstName, [Last Name] = @LastName,  [Job Title] = @JobTitle,  [City] = @City  WHERE No_ = @No_";
+                    var command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@No_", employee.No);
+                    command.Parameters.AddWithValue("@FirstName", employee.FirstName);
+                    command.Parameters.AddWithValue("@LastName", employee.LastName);
+                    command.Parameters.AddWithValue("@JobTitle", employee.JobTitle);
+                    command.Parameters.AddWithValue("@City", employee.City);
+
+                    command.ExecuteNonQuery();
+                }
+
+            }
+
+
+        }
 }
+    
+
 
 
