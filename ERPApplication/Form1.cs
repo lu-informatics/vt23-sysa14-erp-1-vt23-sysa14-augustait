@@ -23,14 +23,8 @@ namespace ERPApplication
 
         }
 
-        private void buttonCreateEmployee_Click(object sender, EventArgs e)
-        {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
-           
-
-
-        }
+      
+        
 
 
       
@@ -122,7 +116,7 @@ namespace ERPApplication
                 try
                 {
                     webApplication.AddEmployee(empId, firstName, lastName, jobTitle, city);
-                    MessageBox.Show($"Employee with ID {empId} has been added successfully!");
+                    MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
                 }
                 catch (SocketException ex)
                 {

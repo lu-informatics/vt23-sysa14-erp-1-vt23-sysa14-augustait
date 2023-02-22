@@ -13,36 +13,11 @@ namespace WebApplication
         private string jobTitle;
         private string city;
 
-        public string No
-        {
-            get { return no; }
-            set { no = value; }
-        }
-
-        public string FirstName
-        {
-            get { return firstName; }
-            set { firstName = value; }
-        }
-
-        public string LastName
-        {
-            get { return lastName; }
-            set { lastName = value; }
-        }
-
-        public string JobTitle
-        {
-            get { return jobTitle; }
-            set { jobTitle = value; }
-        }
-
-        public string City
-        {
-            get { return city; }
-            set { city = value; }
-        }
+        public string No { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string JobTitle { get; set; }
+        public string City { get; set; }
     }
 }
 
-   
