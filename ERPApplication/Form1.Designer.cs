@@ -64,29 +64,28 @@
             this.tabPage1.Controls.Add(this.textBoxNbr);
             this.tabPage1.Controls.Add(this.textBoxLastName);
             this.tabPage1.Controls.Add(this.textBoxFirstName);
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage1.Size = new System.Drawing.Size(891, 550);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(779, 409);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Employee";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // richTextBox
             // 
-            this.richTextBox.Location = new System.Drawing.Point(35, 27);
+            this.richTextBox.Location = new System.Drawing.Point(31, 20);
+            this.richTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox.Name = "richTextBox";
-            this.richTextBox.Size = new System.Drawing.Size(824, 226);
+            this.richTextBox.Size = new System.Drawing.Size(722, 170);
             this.richTextBox.TabIndex = 13;
             this.richTextBox.Text = "";
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(743, 507);
-            this.button8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button8.Location = new System.Drawing.Point(650, 380);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(142, 31);
+            this.button8.Size = new System.Drawing.Size(124, 23);
             this.button8.TabIndex = 12;
             this.button8.Text = "All Primary Keys";
             this.button8.UseVisualStyleBackColor = true;
@@ -94,10 +93,9 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(526, 507);
-            this.button7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button7.Location = new System.Drawing.Point(460, 380);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(195, 31);
+            this.button7.Size = new System.Drawing.Size(171, 23);
             this.button7.TabIndex = 11;
             this.button7.Text = "Total Number Of Columns";
             this.button7.UseVisualStyleBackColor = true;
@@ -105,10 +103,9 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(307, 507);
-            this.button6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button6.Location = new System.Drawing.Point(269, 380);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(192, 31);
+            this.button6.Size = new System.Drawing.Size(168, 23);
             this.button6.TabIndex = 10;
             this.button6.Text = "Total Number Of Tables";
             this.button6.UseVisualStyleBackColor = true;
@@ -116,10 +113,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(119, 507);
-            this.button5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button5.Location = new System.Drawing.Point(104, 380);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(168, 31);
+            this.button5.Size = new System.Drawing.Size(147, 23);
             this.button5.TabIndex = 9;
             this.button5.Text = "Names Of All Columns";
             this.button5.UseVisualStyleBackColor = true;
@@ -127,10 +123,9 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(8, 456);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button4.Location = new System.Drawing.Point(7, 342);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(86, 31);
+            this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 8;
             this.button4.Text = "Update";
             this.button4.UseVisualStyleBackColor = true;
@@ -138,31 +133,28 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(8, 507);
-            this.button3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button3.Location = new System.Drawing.Point(7, 380);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(86, 31);
+            this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 7;
             this.button3.Text = "Delete";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // FindEmployee
             // 
-            this.FindEmployee.Location = new System.Drawing.Point(8, 405);
-            this.FindEmployee.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FindEmployee.Location = new System.Drawing.Point(7, 304);
             this.FindEmployee.Name = "FindEmployee";
-            this.FindEmployee.Size = new System.Drawing.Size(86, 31);
+            this.FindEmployee.Size = new System.Drawing.Size(75, 23);
             this.FindEmployee.TabIndex = 6;
             this.FindEmployee.Text = "Find";
             this.FindEmployee.UseVisualStyleBackColor = true;
-           // this.FindEmployee.Click += new System.EventHandler(this.FindEmployee_Click);
+            this.FindEmployee.Click += new System.EventHandler(this.FindEmployee_Click);
             // 
             // AddEmployee
             // 
-            this.AddEmployee.Location = new System.Drawing.Point(8, 355);
-            this.AddEmployee.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.AddEmployee.Location = new System.Drawing.Point(7, 266);
             this.AddEmployee.Name = "AddEmployee";
-            this.AddEmployee.Size = new System.Drawing.Size(86, 31);
+            this.AddEmployee.Size = new System.Drawing.Size(75, 23);
             this.AddEmployee.TabIndex = 5;
             this.AddEmployee.Text = "Create";
             this.AddEmployee.UseVisualStyleBackColor = true;
@@ -170,66 +162,59 @@
             // 
             // textBoxCity
             // 
-            this.textBoxCity.Location = new System.Drawing.Point(745, 296);
-            this.textBoxCity.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxCity.Location = new System.Drawing.Point(652, 222);
             this.textBoxCity.Name = "textBoxCity";
             this.textBoxCity.PlaceholderText = "City:";
-            this.textBoxCity.Size = new System.Drawing.Size(114, 27);
+            this.textBoxCity.Size = new System.Drawing.Size(100, 23);
             this.textBoxCity.TabIndex = 4;
             // 
             // textBoxJobTitle
             // 
-            this.textBoxJobTitle.Location = new System.Drawing.Point(557, 296);
-            this.textBoxJobTitle.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxJobTitle.Location = new System.Drawing.Point(487, 222);
             this.textBoxJobTitle.Name = "textBoxJobTitle";
             this.textBoxJobTitle.PlaceholderText = "Job Title:";
-            this.textBoxJobTitle.Size = new System.Drawing.Size(114, 27);
+            this.textBoxJobTitle.Size = new System.Drawing.Size(100, 23);
             this.textBoxJobTitle.TabIndex = 3;
             // 
             // textBoxNbr
             // 
-            this.textBoxNbr.Location = new System.Drawing.Point(8, 296);
-            this.textBoxNbr.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxNbr.Location = new System.Drawing.Point(7, 222);
             this.textBoxNbr.Name = "textBoxNbr";
             this.textBoxNbr.PlaceholderText = "ID:";
-            this.textBoxNbr.Size = new System.Drawing.Size(114, 27);
+            this.textBoxNbr.Size = new System.Drawing.Size(100, 23);
             this.textBoxNbr.TabIndex = 2;
             // 
             // textBoxLastName
             // 
-            this.textBoxLastName.Location = new System.Drawing.Point(363, 296);
-            this.textBoxLastName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxLastName.Location = new System.Drawing.Point(318, 222);
             this.textBoxLastName.Name = "textBoxLastName";
             this.textBoxLastName.PlaceholderText = "Last Name";
-            this.textBoxLastName.Size = new System.Drawing.Size(114, 27);
+            this.textBoxLastName.Size = new System.Drawing.Size(100, 23);
             this.textBoxLastName.TabIndex = 1;
             // 
             // textBoxFirstName
             // 
-            this.textBoxFirstName.Location = new System.Drawing.Point(189, 296);
-            this.textBoxFirstName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxFirstName.Location = new System.Drawing.Point(165, 222);
             this.textBoxFirstName.Name = "textBoxFirstName";
             this.textBoxFirstName.PlaceholderText = "First name:";
-            this.textBoxFirstName.Size = new System.Drawing.Size(114, 27);
+            this.textBoxFirstName.Size = new System.Drawing.Size(100, 23);
             this.textBoxFirstName.TabIndex = 0;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(1, 1);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(899, 583);
+            this.tabControl1.Size = new System.Drawing.Size(787, 437);
             this.tabControl1.TabIndex = 0;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(914, 600);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "CRONUS Sverige AB";
             this.tabPage1.ResumeLayout(false);
