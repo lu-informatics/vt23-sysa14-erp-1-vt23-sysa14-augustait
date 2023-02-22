@@ -182,21 +182,21 @@ public static Employee GetEmployeeByNo(string no)
 
             }
 
-        //public static bool EmployeeExists(string no)
-        //{
-        //    using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
-        //    {
-        //        connection.Open();
+       public static bool EmployeeExists(string no)
+        {
+           using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
+           {
+                connection.Open();
 
-        //        string query = "SELECT COUNT(*) FROM [CRONUS Sverige AB$Employee] WHERE [No_] = @No_";
-        //        var command = new SqlCommand(query, connection);
-        //        command.Parameters.AddWithValue("@No_", no);
+               string query = "SELECT COUNT(*) FROM [CRONUS Sverige AB$Employee] WHERE [No_] = @No_";
+               var command = new SqlCommand(query, connection);
+               command.Parameters.AddWithValue("@No_", no);
 
-        //        int count = (int)command.ExecuteScalar();
+           int count = (int)command.ExecuteScalar();
 
-        //        return count > 0;
-        //    }
-        //}
+                return count > 0;
+           }
+        }
 
 
     }

@@ -63,34 +63,61 @@ namespace ERPApplication
         private void UpdateEmployee_Click(object sender, EventArgs e)
         {
 
+            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+            WebApplicationSoapClient webApplication = new(endpointConfiguration);
+
+            richTextBox.Text = "";
+            string empId = textBoxNbr.Text;
+            string firstName = textBoxFirstName.Text;
+            string lastName = textBoxLastName.Text;
+            string jobTitle = textBoxJobTitle.Text;
+            string city = textBoxCity.Text;
+
+            if (string.IsNullOrWhiteSpace(empId) || string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)
+                || string.IsNullOrWhiteSpace(jobTitle) || string.IsNullOrWhiteSpace(city))
+            {
+                richTextBox.Text = "Please enter all the fields!";
+            }
+            else
+            {
+
+
+               
+                    webApplication.UpdateEmployee(empId, firstName, lastName, jobTitle, city);
+                    MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
+                
+                
         }
 
 
-        //private void FindEmployee_Click(object sender, EventArgs e)
-        //{
-        //    var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-        //    WebApplicationSoapClient webApplication = new(endpointConfiguration);
+    }
+        
 
-        //    string employeeNo = textBoxNbr.Text;
 
-        //    // Call the FindEmployeeByNo method in WebApplication to retrieve the employee
-        //    Employee employee = webApplication.FindEmployeeByNo(employeeNo);
 
-        //    // Check if the employee exists
-        //    if (employee == null)
-        //    {
-        //        richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
-        //    }
-        //    else
-        //    {
-        //        // Display the employee information in the rich text box
-        //        richTextBox.AppendText($"No: {employee.No}\n");
-        //        richTextBox.AppendText($"First Name: {employee.FirstName}\n");
-        //        richTextBox.AppendText($"Last Name: {employee.LastName}\n");
-        //        richTextBox.AppendText($"Job Title: {employee.JobTitle}\n");
-        //        richTextBox.AppendText($"City: {employee.City}\n");
-        //    }
-        //}
+            private void FindEmployee_Click(object sender, EventArgs e)
+        {
+            richTextBox.Text = "";
+            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+            WebApplicationSoapClient webApplication = new(endpointConfiguration);
+
+            string employeeNo = textBoxNbr.Text;
+
+            Employee employee = webApplication.GetEmployeeByNo(employeeNo);
+
+            if (employee == null)
+            {
+                richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
+            }
+            else
+            {
+                richTextBox.AppendText("No: " + employee.No + "\n");
+                richTextBox.AppendText("First Name: " + employee.No + "\n");
+                richTextBox.AppendText($"Last Name: {employee.LastName}\n");
+                richTextBox.AppendText($"Job Title: {employee.JobTitle}\n");
+                richTextBox.AppendText($"City: {employee.City}\n");
+            }
+        }
 
         private void CreateEmployee_Click(object sender, EventArgs e)
         {

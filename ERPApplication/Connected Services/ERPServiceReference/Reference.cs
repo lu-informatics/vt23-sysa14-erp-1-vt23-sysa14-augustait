@@ -152,6 +152,13 @@ namespace ERPServiceReference
         
         [System.ServiceModel.OperationContractAttribute(Action="http://ics.lu.se/DeleteEmployee", ReplyAction="*")]
         System.Threading.Tasks.Task<ERPServiceReference.DeleteEmployeeResponse> DeleteEmployeeAsync(ERPServiceReference.DeleteEmployeeRequest request);
+        
+        // CODEGEN: Generating message contract since element name no from namespace http://ics.lu.se is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://ics.lu.se/UpdateEmployee", ReplyAction="*")]
+        ERPServiceReference.UpdateEmployeeResponse UpdateEmployee(ERPServiceReference.UpdateEmployeeRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://ics.lu.se/UpdateEmployee", ReplyAction="*")]
+        System.Threading.Tasks.Task<ERPServiceReference.UpdateEmployeeResponse> UpdateEmployeeAsync(ERPServiceReference.UpdateEmployeeRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -538,6 +545,94 @@ namespace ERPServiceReference
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class UpdateEmployeeRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="UpdateEmployee", Namespace="http://ics.lu.se", Order=0)]
+        public ERPServiceReference.UpdateEmployeeRequestBody Body;
+        
+        public UpdateEmployeeRequest()
+        {
+        }
+        
+        public UpdateEmployeeRequest(ERPServiceReference.UpdateEmployeeRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://ics.lu.se")]
+    public partial class UpdateEmployeeRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string no;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string firstName;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string lastName;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string jobTitle;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public string city;
+        
+        public UpdateEmployeeRequestBody()
+        {
+        }
+        
+        public UpdateEmployeeRequestBody(string no, string firstName, string lastName, string jobTitle, string city)
+        {
+            this.no = no;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.jobTitle = jobTitle;
+            this.city = city;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class UpdateEmployeeResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="UpdateEmployeeResponse", Namespace="http://ics.lu.se", Order=0)]
+        public ERPServiceReference.UpdateEmployeeResponseBody Body;
+        
+        public UpdateEmployeeResponse()
+        {
+        }
+        
+        public UpdateEmployeeResponse(ERPServiceReference.UpdateEmployeeResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class UpdateEmployeeResponseBody
+    {
+        
+        public UpdateEmployeeResponseBody()
+        {
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     public interface WebApplicationSoapChannel : ERPServiceReference.WebApplicationSoap, System.ServiceModel.IClientChannel
     {
@@ -746,6 +841,42 @@ namespace ERPServiceReference
             inValue.Body = new ERPServiceReference.DeleteEmployeeRequestBody();
             inValue.Body.no = no;
             return ((ERPServiceReference.WebApplicationSoap)(this)).DeleteEmployeeAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ERPServiceReference.UpdateEmployeeResponse ERPServiceReference.WebApplicationSoap.UpdateEmployee(ERPServiceReference.UpdateEmployeeRequest request)
+        {
+            return base.Channel.UpdateEmployee(request);
+        }
+        
+        public void UpdateEmployee(string no, string firstName, string lastName, string jobTitle, string city)
+        {
+            ERPServiceReference.UpdateEmployeeRequest inValue = new ERPServiceReference.UpdateEmployeeRequest();
+            inValue.Body = new ERPServiceReference.UpdateEmployeeRequestBody();
+            inValue.Body.no = no;
+            inValue.Body.firstName = firstName;
+            inValue.Body.lastName = lastName;
+            inValue.Body.jobTitle = jobTitle;
+            inValue.Body.city = city;
+            ERPServiceReference.UpdateEmployeeResponse retVal = ((ERPServiceReference.WebApplicationSoap)(this)).UpdateEmployee(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ERPServiceReference.UpdateEmployeeResponse> ERPServiceReference.WebApplicationSoap.UpdateEmployeeAsync(ERPServiceReference.UpdateEmployeeRequest request)
+        {
+            return base.Channel.UpdateEmployeeAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ERPServiceReference.UpdateEmployeeResponse> UpdateEmployeeAsync(string no, string firstName, string lastName, string jobTitle, string city)
+        {
+            ERPServiceReference.UpdateEmployeeRequest inValue = new ERPServiceReference.UpdateEmployeeRequest();
+            inValue.Body = new ERPServiceReference.UpdateEmployeeRequestBody();
+            inValue.Body.no = no;
+            inValue.Body.firstName = firstName;
+            inValue.Body.lastName = lastName;
+            inValue.Body.jobTitle = jobTitle;
+            inValue.Body.city = city;
+            return ((ERPServiceReference.WebApplicationSoap)(this)).UpdateEmployeeAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
