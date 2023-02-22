@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 using static ERPServiceReference.WebApplicationSoapClient;
 using System.ServiceModel;
+using System.Net.Sockets;
 
 namespace ERPApplication
 {
@@ -26,10 +27,9 @@ namespace ERPApplication
         {
             var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
             WebApplicationSoapClient webApplication = new(endpointConfiguration);
-            List<string> primaryKeyConstraints = webApplication.GetPrimaryKeyConstraints().ToList();
+           
 
-            // Display the result in a message box
-            MessageBox.Show($"Primary Key Constraints: {string.Join(", ", primaryKeyConstraints)}");
+
         }
 
 
@@ -100,10 +100,41 @@ namespace ERPApplication
 
         private void CreateEmployee_Click(object sender, EventArgs e)
         {
+            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+            WebApplicationSoapClient webApplication = new(endpointConfiguration);
 
+            richTextBox.Text = "";
+            string empId = textBoxNbr.Text;
+            string firstName = textBoxFirstName.Text;
+            string lastName = textBoxLastName.Text;
+            string jobTitle = textBoxJobTitle.Text;
+            string city = textBoxCity.Text;
+
+            if (string.IsNullOrWhiteSpace(empId) || string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)
+                || string.IsNullOrWhiteSpace(jobTitle) || string.IsNullOrWhiteSpace(city))
+            {
+                richTextBox.Text = "Please enter all the fields!";
+            }
+            else
+            {
+
+
+                try
+                {
+                    webApplication.AddEmployee(empId, firstName, lastName, jobTitle, city);
+                    MessageBox.Show($"Employee with ID {empId} has been added successfully!");
+                }
+                catch (SocketException ex)
+                {
+                    MessageBox.Show($"An error occurred while trying to connect to the server: {ex.Message}");
+                }
+
+            }
         }
 
-        private void NamesOfAllColumns_Click(object sender, EventArgs e)
+    
+
+private void NamesOfAllColumns_Click(object sender, EventArgs e)
         {
             var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
             WebApplicationSoapClient webApplication = new(endpointConfiguration);
