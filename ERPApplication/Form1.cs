@@ -91,31 +91,44 @@ namespace ERPApplication
 
 
     }
-        
 
 
 
-            private void FindEmployee_Click(object sender, EventArgs e)
+
+        private void FindEmployee_Click(object sender, EventArgs e)
         {
-            richTextBox.Text = "";
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
-
-            string employeeNo = textBoxNbr.Text;
-
-            Employee employee = webApplication.GetEmployeeByNo(employeeNo);
-
-            if (employee == null)
+            try
             {
-                richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
+                richTextBox.Text = "";
+                var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+                WebApplicationSoapClient webApplication = new(endpointConfiguration);
+
+                string employeeNo = textBoxNbr.Text;
+
+                Employee employee = webApplication.GetEmployeeByNo(employeeNo);
+
+                if (employee == null)
+                {
+                    richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
+                }
+                else
+                {
+                    richTextBox.AppendText("No: " + employee.No + "\n");
+                    richTextBox.AppendText("First Name: " + employee.No + "\n");
+                    richTextBox.AppendText($"Last Name: {employee.LastName}\n");
+                    richTextBox.AppendText($"Job Title: {employee.JobTitle}\n");
+                    richTextBox.AppendText($"City: {employee.City}\n");
+                }
             }
-            else
+            catch (System.Net.WebException ex)
             {
-                richTextBox.AppendText("No: " + employee.No + "\n");
-                richTextBox.AppendText("First Name: " + employee.No + "\n");
-                richTextBox.AppendText($"Last Name: {employee.LastName}\n");
-                richTextBox.AppendText($"Job Title: {employee.JobTitle}\n");
-                richTextBox.AppendText($"City: {employee.City}\n");
+                // Handle the WebException here
+                richTextBox.AppendText($"An error occurred while connecting to the server. Check your network settings. \n");
+            }
+            catch (System.ServiceModel.FaultException ex)
+            {
+                // Handle the FaultException here
+                richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
             }
         }
 
