@@ -97,11 +97,13 @@ namespace ERPApplication
 
         private void FindEmployee_Click(object sender, EventArgs e)
         {
+
             try
             {
                 richTextBox.Text = "";
                 var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
                 WebApplicationSoapClient webApplication = new(endpointConfiguration);
+
 
                 string employeeNo = textBoxNbr.Text;
 
@@ -127,12 +129,16 @@ namespace ERPApplication
             }
             catch (System.ServiceModel.FaultException ex)
             {
+
                 // Handle the FaultException here
                 richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
+
+
             }
         }
 
-        private void CreateEmployee_Click(object sender, EventArgs e)
+        
+      private void CreateEmployee_Click(object sender, EventArgs e)
         {
             var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
             WebApplicationSoapClient webApplication = new(endpointConfiguration);
@@ -151,24 +157,31 @@ namespace ERPApplication
             }
             else
             {
-
-
                 try
                 {
-                    webApplication.AddEmployee(empId, firstName, lastName, jobTitle, city);
-                    MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
+                    // Check if the employee with the specified ID already exists
+                    Employee existingEmployee = webApplication.GetEmployeeByNo(empId);
+
+                    if (existingEmployee != null)
+                    {
+                        MessageBox.Show("Employee with ID: " + empId + " already exists!");
+                    }
+                    else
+                    {
+                        webApplication.AddEmployee(empId, firstName, lastName, jobTitle, city);
+                        MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
+                    }
                 }
                 catch (SocketException ex)
                 {
                     MessageBox.Show($"An error occurred while trying to connect to the server: {ex.Message}");
                 }
-
             }
         }
 
-    
 
-private void NamesOfAllColumns_Click(object sender, EventArgs e)
+
+        private void NamesOfAllColumns_Click(object sender, EventArgs e)
         {
             var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
             WebApplicationSoapClient webApplication = new(endpointConfiguration);
