@@ -169,7 +169,7 @@ public static Employee GetEmployeeByNo(string no)
                 {
                     connection.Open();
 
-                string query = "UPDATE[CRONUS Sverige AB$Employee] SET[First Name] = @FirstName, [Last Name] = @LastName,  [Job Title] = @JobTitle,  [City] = @City  WHERE No_ = @No_";
+                string query = "UPDATE[CRONUS Sverige AB$Employee] SET [First Name] = @FirstName,  [Last Name] = @LastName,  [Job Title] = @JobTitle,  [City] = @City  WHERE No_ = @No_";
                     var command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@No_", employee.No);
                     command.Parameters.AddWithValue("@FirstName", employee.FirstName);
