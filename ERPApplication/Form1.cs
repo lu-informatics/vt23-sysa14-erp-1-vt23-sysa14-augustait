@@ -22,43 +22,45 @@ namespace ERPApplication
            
 
         }
-
-      
-        
-
-
-      
-        
-
-        private void button8_Click(object sender, EventArgs e)
+    
+        private void DeleteEmployee_Click(object sender, EventArgs e)
         {
+           var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
+           WebApplicationSoapClient webApplication = new(endpointConfiguration);
 
+            richTextBox.Text = "";
+            string empId = textBoxNbr.Text;
+
+            if (string.IsNullOrWhiteSpace(empId))
+            {
+                richTextBox.Text = "Please enter the ID field!";
+            }
+            else
+            {
+                try
+                {
+                    // Check if the employee with the specified ID already exists
+                    Employee existingEmployee = webApplication.GetEmployeeByNo(empId);
+
+                    if (existingEmployee == null)
+                    {
+                        MessageBox.Show("Employee with ID: " + empId + " dosen't exist! Please specify a ID that exist!");
+                        textBoxNbr.Text = "";
+                    }
+                    else
+                    {
+                        webApplication.DeleteEmployee(empId);
+                        MessageBox.Show("Employee with ID: " + empId + " has been deleted successfully!");
+                    }
+                }
+                catch (System.ServiceModel.FaultException)
+                {
+                    richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
+
+
+                }
+            }
         }
-
-        // DELETE Employee - HAR INGEN REFERENS
-      
-        //private void DeleteEmployee_Click(object sender, EventArgs e)
-        //{
-        //    var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-        //    WebApplicationSoapClient webApplication = new(endpointConfiguration);
-
-        //    string employeeNo = textBoxNbr.Text;
-
-        //    // Check if employee exists before deleting
-        //    bool employeeExists = webApplication.EmployeeExists(employeeNo);
-           
-        //    if (!employeeExists)
-        //    {
-        //        richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
-        //        return;
-        //    }
-
-        //    webApplication.DeleteEmployee(employeeNo);
-        //    richTextBox.AppendText($"Employee with No. {employeeNo} has been deleted successfully.\n");
-        //}
-
-        // FIND Employee
-       
 
         private void UpdateEmployee_Click(object sender, EventArgs e)
         {
@@ -80,17 +82,32 @@ namespace ERPApplication
             }
             else
             {
+                try
+                {
+                    // Check if the employee with the specified ID already exists
+                    Employee existingEmployee = webApplication.GetEmployeeByNo(empId);
+
+                    if (existingEmployee == null)
+                    {
+                        MessageBox.Show("Employee with ID: " + empId + " dosen't exist! Please specify an available ID to update!");
+                    }
+                    else
+                    {
+                        webApplication.UpdateEmployee(empId, firstName, lastName, jobTitle, city);
+                        MessageBox.Show("Employee with ID: " + empId + " has been updated successfully!");
+                    }
+                }
+                catch (System.ServiceModel.FaultException ex)
+                {
+
+                    // Handle the FaultException here
+                    richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
 
 
-               
-                    webApplication.UpdateEmployee(empId, firstName, lastName, jobTitle, city);
-                    MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
-                
-                
+                }
+            }
         }
 
-
-    }
 
 
 
@@ -172,16 +189,20 @@ namespace ERPApplication
                         MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
                     }
                 }
-                catch (SocketException ex)
+                catch (System.ServiceModel.FaultException ex)
                 {
-                    MessageBox.Show($"An error occurred while trying to connect to the server: {ex.Message}");
+
+                    // Handle the FaultException here
+                    richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
+
+
                 }
             }
         }
 
 
 
-        private void NamesOfAllColumns_Click(object sender, EventArgs e)
+    private void NamesOfAllColumns_Click(object sender, EventArgs e)
         {
             var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
             WebApplicationSoapClient webApplication = new(endpointConfiguration);
