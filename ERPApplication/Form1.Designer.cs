@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.labelFirstName = new System.Windows.Forms.Label();
+            this.labelEmployeeId = new System.Windows.Forms.Label();
             this.labelDataBaseName = new System.Windows.Forms.Label();
             this.comboBoxEmpId = new System.Windows.Forms.ComboBox();
             this.richTextBox = new System.Windows.Forms.RichTextBox();
@@ -52,6 +54,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.labelFirstName);
+            this.tabPage1.Controls.Add(this.labelEmployeeId);
             this.tabPage1.Controls.Add(this.labelDataBaseName);
             this.tabPage1.Controls.Add(this.comboBoxEmpId);
             this.tabPage1.Controls.Add(this.richTextBox);
@@ -74,6 +78,23 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Employee";
             // 
+            // labelFirstName
+            // 
+            this.labelFirstName.AutoSize = true;
+            this.labelFirstName.Location = new System.Drawing.Point(180, 204);
+            this.labelFirstName.Name = "labelFirstName";
+            this.labelFirstName.Size = new System.Drawing.Size(0, 15);
+            this.labelFirstName.TabIndex = 27;
+            // 
+            // labelEmployeeId
+            // 
+            this.labelEmployeeId.AutoSize = true;
+            this.labelEmployeeId.Location = new System.Drawing.Point(19, 204);
+            this.labelEmployeeId.Name = "labelEmployeeId";
+            this.labelEmployeeId.Size = new System.Drawing.Size(76, 15);
+            this.labelEmployeeId.TabIndex = 26;
+            this.labelEmployeeId.Text = "Employee ID:";
+            // 
             // labelDataBaseName
             // 
             this.labelDataBaseName.AutoSize = true;
@@ -95,9 +116,11 @@
             // 
             // richTextBox
             // 
+            this.richTextBox.BackColor = System.Drawing.Color.WhiteSmoke;
             this.richTextBox.Location = new System.Drawing.Point(7, 56);
             this.richTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox.Name = "richTextBox";
+            this.richTextBox.ReadOnly = true;
             this.richTextBox.Size = new System.Drawing.Size(766, 137);
             this.richTextBox.TabIndex = 13;
             this.richTextBox.Text = "";
@@ -202,7 +225,7 @@
             // 
             this.textBoxLastName.Location = new System.Drawing.Point(318, 222);
             this.textBoxLastName.Name = "textBoxLastName";
-            this.textBoxLastName.PlaceholderText = "Last Name";
+            this.textBoxLastName.PlaceholderText = "Last Name:";
             this.textBoxLastName.Size = new System.Drawing.Size(100, 23);
             this.textBoxLastName.TabIndex = 1;
             // 
@@ -257,5 +280,7 @@
         private RichTextBox richTextBox;
         private ComboBox comboBoxEmpId;
         private Label labelDataBaseName;
+        private Label labelFirstName;
+        private Label labelEmployeeId;
     }
 }

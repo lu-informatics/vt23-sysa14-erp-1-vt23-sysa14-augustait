@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using static ERPServiceReference.WebApplicationSoapClient;
 using System.ServiceModel;
 using System.Net.Sockets;
+using System.Numerics;
 
 namespace ERPApplication
 {
@@ -21,29 +22,117 @@ namespace ERPApplication
             InitializeComponent();
 
             var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
+            _webServiceClient = new(endpointConfiguration);
 
             RefreshComboBox();
+            comboBoxEmpId.SelectedIndex = -1;
         }
 
         private void RefreshComboBox()
         {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
+            
 
             // Retrieve the list of employee IDs
-            List<string> employeeIds = webApplication.GetAllEmployeeIds();
+            List<string> employeeIds = _webServiceClient.GetAllEmployeeIds();
 
             // Set the DataSource property of the ComboBox to the list of employee IDs
             comboBoxEmpId.DataSource = employeeIds;
+            
         }
+
+        private void CreateEmployee_Click(object sender, EventArgs e)
+        {
+           
+            // Clear selected item in combo box
+            comboBoxEmpId.SelectedIndex = -1;
+            richTextBox.Text = "";
+            string empId = "";
+
+            if (!string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
+            {
+                empId = comboBoxEmpId.Text;
+            }
+
+            string firstName = textBoxFirstName.Text;
+            string lastName = textBoxLastName.Text;
+            string jobTitle = textBoxJobTitle.Text;
+            string city = textBoxCity.Text;
+
+            if (string.IsNullOrWhiteSpace(empId) || string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)
+                || string.IsNullOrWhiteSpace(jobTitle) || string.IsNullOrWhiteSpace(city))
+            {
+                richTextBox.Text = "Please enter all the fields!";
+            }
+            else
+            {
+                try
+                {
+                    Employee existingEmployee = _webServiceClient.GetEmployeeByNo(empId);
+
+                    if (existingEmployee != null)
+                    {
+                        MessageBox.Show("Employee with ID: " + empId + " already exists!");
+                    }
+                    else
+                    {
+                        _webServiceClient.AddEmployee(empId, firstName, lastName, jobTitle, city);
+                        MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
+                        RefreshComboBox();
+                    }
+                }
+                catch (System.ServiceModel.FaultException)
+                {
+                    richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database.";
+                }
+            }
+        }
+
+        private void FindEmployee_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                richTextBox.Text = "";
+                string employeeNo = "";
+                if (comboBoxEmpId.SelectedItem != null)
+                {
+                    employeeNo = comboBoxEmpId.SelectedItem.ToString();
+                }
+                else if (!string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
+                {
+                    employeeNo = comboBoxEmpId.Text;
+                }
+                else
+                {
+                    richTextBox.Text = "Please either select or enter an Employee ID to find!";
+                    return;
+                }
+
+                Employee employee = _webServiceClient.GetEmployeeByNo(employeeNo);
+
+                if (employee == null)
+                {
+                    richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
+                }
+                else
+                {
+                    richTextBox.AppendText("No: " + employee.No + "\n");
+                    richTextBox.AppendText("First Name: " + employee.FirstName + "\n");
+                    richTextBox.AppendText($"Last Name: {employee.LastName}\n");
+                    richTextBox.AppendText($"Job Title: {employee.JobTitle}\n");
+                    richTextBox.AppendText($"City: {employee.City}\n");
+                }
+            }
+            catch (System.ServiceModel.FaultException ex)
+            {
+                richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
+            }
+        }
+
 
 
         private void DeleteEmployee_Click(object sender, EventArgs e)
         {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
-
+            comboBoxEmpId.SelectedIndex = -1;
             richTextBox.Text = "";
             string empId = "";
 
@@ -65,7 +154,7 @@ namespace ERPApplication
     
                 try
                 {
-                    Employee existingEmployee = webApplication.GetEmployeeByNo(empId);
+                    Employee existingEmployee = _webServiceClient.GetEmployeeByNo(empId);
 
                     if (existingEmployee == null)
                     {
@@ -74,7 +163,7 @@ namespace ERPApplication
                     }
                     else
                     {
-                        webApplication.DeleteEmployee(empId);
+                    _webServiceClient.DeleteEmployee(empId);
                         MessageBox.Show("Employee with ID: " + empId + " has been deleted successfully!");
                         RefreshComboBox();
                     }
@@ -87,9 +176,7 @@ namespace ERPApplication
 
         private void UpdateEmployee_Click(object sender, EventArgs e)
         {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
-
+            comboBoxEmpId.SelectedIndex = -1;
             richTextBox.Text = "";
             string empId = "";
 
@@ -103,7 +190,7 @@ namespace ERPApplication
             }
             else
             {
-                richTextBox.Text = "Please select or enter an Employee ID to update!";
+                richTextBox.Text = "Please either select or enter an Employee ID to update!";
                 return;
             }
 
@@ -121,7 +208,7 @@ namespace ERPApplication
             {
                 try
                 {
-                    Employee existingEmployee = webApplication.GetEmployeeByNo(empId);
+                    Employee existingEmployee = _webServiceClient.GetEmployeeByNo(empId);
 
                     if (existingEmployee == null)
                     {
@@ -130,7 +217,7 @@ namespace ERPApplication
                     }
                     else
                     {
-                        webApplication.UpdateEmployee(empId, firstName, lastName, jobTitle, city);
+                        _webServiceClient.UpdateEmployee(empId, firstName, lastName, jobTitle, city);
                         MessageBox.Show("Employee with ID: " + empId + " has been updated successfully!");
                     }
                 }
@@ -141,113 +228,11 @@ namespace ERPApplication
             }
         }
 
-
-        private void FindEmployee_Click(object sender, EventArgs e)
+        private void NamesOfAllColumns_Click(object sender, EventArgs e)
         {
             try
             {
-                richTextBox.Text = "";
-                var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-                WebApplicationSoapClient webApplication = new(endpointConfiguration);
-
-                string employeeNo = "";
-                if (comboBoxEmpId.SelectedItem == null || string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
-                {
-                    richTextBox.Text = "Please select an employee ID or type one to find!";
-                    return;
-                }
-                else if (comboBoxEmpId.SelectedItem != null)
-                {
-                    employeeNo = comboBoxEmpId.SelectedItem.ToString();
-                }
-                else if (!string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
-                {
-                    employeeNo = comboBoxEmpId.Text;
-                }
-
-                Employee employee = webApplication.GetEmployeeByNo(employeeNo);
-
-                if (employee == null)
-                {
-                    richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
-                }
-                else
-                {
-                    richTextBox.AppendText("No: " + employee.No + "\n");
-                    richTextBox.AppendText("First Name: " + employee.FirstName + "\n");
-                    richTextBox.AppendText($"Last Name: {employee.LastName}\n");
-                    richTextBox.AppendText($"Job Title: {employee.JobTitle}\n");
-                    richTextBox.AppendText($"City: {employee.City}\n");
-                }
-            }
-            catch (System.ServiceModel.FaultException ex)
-            {
-
-                // Handle the FaultException here
-                richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
-            }
-        }
-
-
-        private void CreateEmployee_Click(object sender, EventArgs e)
-        {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
-
-            richTextBox.Text = "";
-            string empId = "";
-
-            if (comboBoxEmpId.SelectedItem != null)
-            {
-                empId = comboBoxEmpId.SelectedItem.ToString();
-            }
-            else if (!string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
-            {
-                empId = comboBoxEmpId.Text;
-            }
-
-            string firstName = textBoxFirstName.Text;
-            string lastName = textBoxLastName.Text;
-            string jobTitle = textBoxJobTitle.Text;
-            string city = textBoxCity.Text;
-
-            if (string.IsNullOrWhiteSpace(empId) || string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)
-                || string.IsNullOrWhiteSpace(jobTitle) || string.IsNullOrWhiteSpace(city))
-            {
-                richTextBox.Text = "Please enter all the fields!";
-            }
-            else
-            {
-                try
-                {
-                    
-                    Employee existingEmployee = webApplication.GetEmployeeByNo(empId);
-
-                    if (existingEmployee != null)
-                    {
-                        MessageBox.Show("Employee with ID: " + empId + " already exists!");
-                    }
-                    else
-                    {
-                        webApplication.AddEmployee(empId, firstName, lastName, jobTitle, city);
-                        MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
-                        RefreshComboBox();
-
-                    }
-                }
-                catch (System.ServiceModel.FaultException)
-                { 
-                    richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
-                }
-            }
-        }
-
-
-        private void NamesOfAllColumns_Click(object sender, EventArgs e)
-        {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
-            List<string> columnNames = webApplication.GetItemTableColumnNames().ToList();
+            List<string> columnNames = _webServiceClient.GetItemTableColumnNames().ToList();
 
             // Add column names to the RichTextBox
             richTextBox.Clear();
@@ -256,13 +241,19 @@ namespace ERPApplication
             {
                 richTextBox.AppendText(columnName + "\n");
             }
+            }
+            catch (System.ServiceModel.FaultException)
+            {
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
+            }
         }
 
         private void AllPrimaryKeys_Click(object sender, EventArgs e)
         {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
-            List<string> constraintNames = webApplication.GetPrimaryKeyConstraints().ToList();
+            try
+            {
+                
+            List<string> constraintNames = _webServiceClient.GetPrimaryKeyConstraints().ToList();
 
             // Display constraint names in RichTextBox
             richTextBox.Clear();
@@ -272,26 +263,44 @@ namespace ERPApplication
                 richTextBox.AppendText(constraintName + "\n");
             }
         }
+        catch (System.ServiceModel.FaultException)
+            {
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
+            }
+}
+    
 
 
         private void TotalNumberOfTables_Click(object sender, EventArgs e)
         {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new WebApplicationSoapClient(endpointConfiguration);
-
-            int tableCount = webApplication.GetTableCount();
+            try
+            {
+               
+            int tableCount = _webServiceClient.GetTableCount();
             richTextBox.Clear();
             richTextBox.AppendText($"Total number of tables in the database: {tableCount}");
+
+            }
+            catch (System.ServiceModel.FaultException)
+            {
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
+            }
         }
+
 
         private void TotalNumberOfColumns(object sender, EventArgs e)
         {
-            var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
-            WebApplicationSoapClient webApplication = new(endpointConfiguration);
-
-            int columnCount = webApplication.GetColumnCount();
+            try
+            {
+         
+            int columnCount = _webServiceClient.GetColumnCount();
             richTextBox.Clear();
             richTextBox.AppendText($"The total number of columns in the database is: {columnCount}\n");
+        }
+            catch (System.ServiceModel.FaultException)
+            {
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
+            }
         }
     }
 }
