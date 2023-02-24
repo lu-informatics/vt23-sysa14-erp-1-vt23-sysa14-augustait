@@ -42,48 +42,45 @@ namespace ERPApplication
 
         private void CreateEmployee_Click(object sender, EventArgs e)
         {
-           
-            // Clear selected item in combo box
-            comboBoxEmpId.SelectedIndex = -1;
+            
             richTextBox.Text = "";
-            string empId = "";
 
-            if (!string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
-            {
-                empId = comboBoxEmpId.Text;
-            }
-
+            string empId = comboBoxEmpId.Text;
             string firstName = textBoxFirstName.Text;
             string lastName = textBoxLastName.Text;
             string jobTitle = textBoxJobTitle.Text;
             string city = textBoxCity.Text;
 
-            if (string.IsNullOrWhiteSpace(empId) || string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)
-                || string.IsNullOrWhiteSpace(jobTitle) || string.IsNullOrWhiteSpace(city))
+            if (string.IsNullOrWhiteSpace(empId))
+            {
+                richTextBox.Text = "Please enter a new employee ID.";
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName) || string.IsNullOrWhiteSpace(jobTitle) || string.IsNullOrWhiteSpace(city))
             {
                 richTextBox.Text = "Please enter all the fields!";
+                return;
             }
-            else
-            {
-                try
-                {
-                    Employee existingEmployee = _webServiceClient.GetEmployeeByNo(empId);
 
-                    if (existingEmployee != null)
-                    {
-                        MessageBox.Show("Employee with ID: " + empId + " already exists!");
-                    }
-                    else
-                    {
-                        _webServiceClient.AddEmployee(empId, firstName, lastName, jobTitle, city);
-                        MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
-                        RefreshComboBox();
-                    }
-                }
-                catch (System.ServiceModel.FaultException)
+            try
+            {
+                Employee existingEmployee = _webServiceClient.GetEmployeeByNo(empId);
+                if (existingEmployee != null)
                 {
-                    richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database.";
+                    richTextBox.Text = "Employee with Employee ID: " + empId + " already exists! Please specify a new one in order to create an Employee!.";
+                    return;
                 }
+
+                _webServiceClient.AddEmployee(empId, firstName, lastName, jobTitle, city);
+                MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
+                RefreshComboBox();
+                
+
+            }
+            catch (System.ServiceModel.FaultException)
+            {
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database.";
             }
         }
 
@@ -111,20 +108,20 @@ namespace ERPApplication
 
                 if (employee == null)
                 {
-                    richTextBox.AppendText($"Employee with No. {employeeNo} does not exist. Please try again.\n");
+                    richTextBox.Text = "Employee with Employee ID: " + employeeNo + " doesen't exist. Please try again and specify an Employee ID that exists!\n";
                 }
                 else
                 {
                     richTextBox.AppendText("No: " + employee.No + "\n");
                     richTextBox.AppendText("First Name: " + employee.FirstName + "\n");
-                    richTextBox.AppendText($"Last Name: {employee.LastName}\n");
-                    richTextBox.AppendText($"Job Title: {employee.JobTitle}\n");
-                    richTextBox.AppendText($"City: {employee.City}\n");
+                    richTextBox.AppendText("Last Name: " + employee.LastName + "\n");
+                    richTextBox.AppendText("Job Title: " + employee.JobTitle + "\n");
+                    richTextBox.AppendText("City: " + employee.City + "\n");
                 }
             }
-            catch (System.ServiceModel.FaultException ex)
+            catch (System.ServiceModel.FaultException)
             {
-                richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
             }
         }
 
@@ -132,7 +129,7 @@ namespace ERPApplication
 
         private void DeleteEmployee_Click(object sender, EventArgs e)
         {
-            comboBoxEmpId.SelectedIndex = -1;
+            
             richTextBox.Text = "";
             string empId = "";
 
@@ -166,17 +163,18 @@ namespace ERPApplication
                     _webServiceClient.DeleteEmployee(empId);
                         MessageBox.Show("Employee with ID: " + empId + " has been deleted successfully!");
                         RefreshComboBox();
-                    }
+                        comboBoxEmpId.SelectedIndex = -1;
+                }
                 }
                 catch (System.ServiceModel.FaultException)
                 {
-                    richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
-                }
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
+            }
             }
 
         private void UpdateEmployee_Click(object sender, EventArgs e)
         {
-            comboBoxEmpId.SelectedIndex = -1;
+
             richTextBox.Text = "";
             string empId = "";
 
@@ -219,11 +217,13 @@ namespace ERPApplication
                     {
                         _webServiceClient.UpdateEmployee(empId, firstName, lastName, jobTitle, city);
                         MessageBox.Show("Employee with ID: " + empId + " has been updated successfully!");
+                        comboBoxEmpId.SelectedIndex = -1;
+                        //Lägg in att alla andra fälten rensas!
                     }
                 }
                 catch (System.ServiceModel.FaultException)
                 {
-                    richTextBox.AppendText($"An error occurred while calling the web service. Check your connection to the database. \n");
+                    richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
                 }
             }
         }
