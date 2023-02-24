@@ -18,6 +18,14 @@ namespace WebApplication
     public class WebApplication : System.Web.Services.WebService
     {
 
+        [WebMethod(Description = "Returns all the NO_ values from the employee table")]
+            public List<string> GetAllEmployeeIds()
+            {
+            List<string> employeeIds = DAL.DataAccessLayer.GetALlEmployeeIds();
+                return employeeIds;
+            }
+        
+
         [WebMethod(Description = "Returns an employee with the specified id")]
 
         public Employee GetEmployeeByNo(string no)
