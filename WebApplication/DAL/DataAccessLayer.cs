@@ -9,30 +9,27 @@ using System.Xml.Linq;
 namespace WebApplication.DAL
 {
     public class DataAccessLayer
-    { 
-            public static List<Employee> GetEmployees()
+    {
+        public static List<string> GetALlEmployeeIds()
+        {
+            var employeeIds = new List<string>();
+            using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
             {
-                var employees = new List<Employee>();
-                using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
-                {
                 connection.Open();
-                string query = "SELECT [No_], [First Name] FROM [CRONUS Sverige AB$Employee] WHERE No_ = 'AB'";
+                string query = "SELECT [No_] FROM [CRONUS Sverige AB$Employee]";
                 var command = new SqlCommand(query, connection);
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        var employee = new Employee();
-                        employee.No = reader["No_"] as string;
-                        employee.FirstName = reader["First Name"] as string;
-                      
-                        
-                        employees.Add(employee);
-                    }
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    
+                    string employeeId = reader["No_"] as string;
+                    employeeIds.Add(employeeId);
                 }
-                return employees;
             }
-        
-public static Employee GetEmployeeByNo(string no)
+            return employeeIds;
+        }
+
+        public static Employee GetEmployeeByNo(string no)
     {
         Employee employee = null;
         using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())

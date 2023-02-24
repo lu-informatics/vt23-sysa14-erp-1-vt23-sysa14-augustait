@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.labelDataBaseName = new System.Windows.Forms.Label();
+            this.comboBoxEmpId = new System.Windows.Forms.ComboBox();
             this.richTextBox = new System.Windows.Forms.RichTextBox();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -40,7 +42,6 @@
             this.AddEmployee = new System.Windows.Forms.Button();
             this.textBoxCity = new System.Windows.Forms.TextBox();
             this.textBoxJobTitle = new System.Windows.Forms.TextBox();
-            this.textBoxNbr = new System.Windows.Forms.TextBox();
             this.textBoxLastName = new System.Windows.Forms.TextBox();
             this.textBoxFirstName = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -50,6 +51,9 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.labelDataBaseName);
+            this.tabPage1.Controls.Add(this.comboBoxEmpId);
             this.tabPage1.Controls.Add(this.richTextBox);
             this.tabPage1.Controls.Add(this.button8);
             this.tabPage1.Controls.Add(this.button7);
@@ -61,7 +65,6 @@
             this.tabPage1.Controls.Add(this.AddEmployee);
             this.tabPage1.Controls.Add(this.textBoxCity);
             this.tabPage1.Controls.Add(this.textBoxJobTitle);
-            this.tabPage1.Controls.Add(this.textBoxNbr);
             this.tabPage1.Controls.Add(this.textBoxLastName);
             this.tabPage1.Controls.Add(this.textBoxFirstName);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
@@ -70,14 +73,32 @@
             this.tabPage1.Size = new System.Drawing.Size(779, 409);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Employee";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // labelDataBaseName
+            // 
+            this.labelDataBaseName.AutoSize = true;
+            this.labelDataBaseName.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelDataBaseName.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelDataBaseName.Location = new System.Drawing.Point(200, 3);
+            this.labelDataBaseName.Name = "labelDataBaseName";
+            this.labelDataBaseName.Size = new System.Drawing.Size(354, 47);
+            this.labelDataBaseName.TabIndex = 25;
+            this.labelDataBaseName.Text = "CRONUS Sverige AB";
+            // 
+            // comboBoxEmpId
+            // 
+            this.comboBoxEmpId.FormattingEnabled = true;
+            this.comboBoxEmpId.Location = new System.Drawing.Point(7, 222);
+            this.comboBoxEmpId.Name = "comboBoxEmpId";
+            this.comboBoxEmpId.Size = new System.Drawing.Size(100, 23);
+            this.comboBoxEmpId.TabIndex = 14;
             // 
             // richTextBox
             // 
-            this.richTextBox.Location = new System.Drawing.Point(31, 20);
+            this.richTextBox.Location = new System.Drawing.Point(7, 56);
             this.richTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox.Name = "richTextBox";
-            this.richTextBox.Size = new System.Drawing.Size(722, 170);
+            this.richTextBox.Size = new System.Drawing.Size(766, 137);
             this.richTextBox.TabIndex = 13;
             this.richTextBox.Text = "";
             // 
@@ -177,14 +198,6 @@
             this.textBoxJobTitle.Size = new System.Drawing.Size(100, 23);
             this.textBoxJobTitle.TabIndex = 3;
             // 
-            // textBoxNbr
-            // 
-            this.textBoxNbr.Location = new System.Drawing.Point(7, 222);
-            this.textBoxNbr.Name = "textBoxNbr";
-            this.textBoxNbr.PlaceholderText = "ID:";
-            this.textBoxNbr.Size = new System.Drawing.Size(100, 23);
-            this.textBoxNbr.TabIndex = 2;
-            // 
             // textBoxLastName
             // 
             this.textBoxLastName.Location = new System.Drawing.Point(318, 222);
@@ -234,7 +247,6 @@
         private Button AddEmployee;
         private TextBox textBoxCity;
         private TextBox textBoxJobTitle;
-        private TextBox textBoxNbr;
         private TextBox textBoxLastName;
         private TextBox textBoxFirstName;
         private TabControl tabControl1;
@@ -243,5 +255,7 @@
         private Button button6;
         private Button button5;
         private RichTextBox richTextBox;
+        private ComboBox comboBoxEmpId;
+        private Label labelDataBaseName;
     }
 }

@@ -14,6 +14,13 @@ namespace ERPServiceReference
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfString", Namespace="http://ics.lu.se", ItemName="string")]
+    public class ArrayOfString : System.Collections.Generic.List<string>
+    {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Employee", Namespace="http://ics.lu.se")]
     public partial class Employee : object
     {
@@ -94,17 +101,17 @@ namespace ERPServiceReference
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfString", Namespace="http://ics.lu.se", ItemName="string")]
-    public class ArrayOfString : System.Collections.Generic.List<string>
-    {
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://ics.lu.se", ConfigurationName="ERPServiceReference.WebApplicationSoap")]
     public interface WebApplicationSoap
     {
+        
+        // CODEGEN: Generating message contract since element name GetAllEmployeeIdsResult from namespace http://ics.lu.se is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://ics.lu.se/GetAllEmployeeIds", ReplyAction="*")]
+        ERPServiceReference.GetAllEmployeeIdsResponse GetAllEmployeeIds(ERPServiceReference.GetAllEmployeeIdsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://ics.lu.se/GetAllEmployeeIds", ReplyAction="*")]
+        System.Threading.Tasks.Task<ERPServiceReference.GetAllEmployeeIdsResponse> GetAllEmployeeIdsAsync(ERPServiceReference.GetAllEmployeeIdsRequest request);
         
         // CODEGEN: Generating message contract since element name no from namespace http://ics.lu.se is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://ics.lu.se/GetEmployeeByNo", ReplyAction="*")]
@@ -159,6 +166,78 @@ namespace ERPServiceReference
         
         [System.ServiceModel.OperationContractAttribute(Action="http://ics.lu.se/UpdateEmployee", ReplyAction="*")]
         System.Threading.Tasks.Task<ERPServiceReference.UpdateEmployeeResponse> UpdateEmployeeAsync(ERPServiceReference.UpdateEmployeeRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetAllEmployeeIdsRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetAllEmployeeIds", Namespace="http://ics.lu.se", Order=0)]
+        public ERPServiceReference.GetAllEmployeeIdsRequestBody Body;
+        
+        public GetAllEmployeeIdsRequest()
+        {
+        }
+        
+        public GetAllEmployeeIdsRequest(ERPServiceReference.GetAllEmployeeIdsRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class GetAllEmployeeIdsRequestBody
+    {
+        
+        public GetAllEmployeeIdsRequestBody()
+        {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetAllEmployeeIdsResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetAllEmployeeIdsResponse", Namespace="http://ics.lu.se", Order=0)]
+        public ERPServiceReference.GetAllEmployeeIdsResponseBody Body;
+        
+        public GetAllEmployeeIdsResponse()
+        {
+        }
+        
+        public GetAllEmployeeIdsResponse(ERPServiceReference.GetAllEmployeeIdsResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.1.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://ics.lu.se")]
+    public partial class GetAllEmployeeIdsResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public ERPServiceReference.ArrayOfString GetAllEmployeeIdsResult;
+        
+        public GetAllEmployeeIdsResponseBody()
+        {
+        }
+        
+        public GetAllEmployeeIdsResponseBody(ERPServiceReference.ArrayOfString GetAllEmployeeIdsResult)
+        {
+            this.GetAllEmployeeIdsResult = GetAllEmployeeIdsResult;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -674,6 +753,33 @@ namespace ERPServiceReference
         public WebApplicationSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress)
         {
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ERPServiceReference.GetAllEmployeeIdsResponse ERPServiceReference.WebApplicationSoap.GetAllEmployeeIds(ERPServiceReference.GetAllEmployeeIdsRequest request)
+        {
+            return base.Channel.GetAllEmployeeIds(request);
+        }
+        
+        public ERPServiceReference.ArrayOfString GetAllEmployeeIds()
+        {
+            ERPServiceReference.GetAllEmployeeIdsRequest inValue = new ERPServiceReference.GetAllEmployeeIdsRequest();
+            inValue.Body = new ERPServiceReference.GetAllEmployeeIdsRequestBody();
+            ERPServiceReference.GetAllEmployeeIdsResponse retVal = ((ERPServiceReference.WebApplicationSoap)(this)).GetAllEmployeeIds(inValue);
+            return retVal.Body.GetAllEmployeeIdsResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ERPServiceReference.GetAllEmployeeIdsResponse> ERPServiceReference.WebApplicationSoap.GetAllEmployeeIdsAsync(ERPServiceReference.GetAllEmployeeIdsRequest request)
+        {
+            return base.Channel.GetAllEmployeeIdsAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ERPServiceReference.GetAllEmployeeIdsResponse> GetAllEmployeeIdsAsync()
+        {
+            ERPServiceReference.GetAllEmployeeIdsRequest inValue = new ERPServiceReference.GetAllEmployeeIdsRequest();
+            inValue.Body = new ERPServiceReference.GetAllEmployeeIdsRequestBody();
+            return ((ERPServiceReference.WebApplicationSoap)(this)).GetAllEmployeeIdsAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
