@@ -88,8 +88,6 @@ namespace ERPApplication
                 if (existingEmployee != null)
                 {
                     richTextBox.Text = "Employee with Employee ID: " + empId + " already exists! Please specify a new one in order to create an Employee!.";
-                    comboBoxEmpId.SelectedIndex = -1;
-                    comboBoxEmpId.Text = "";
                     return;
                 }
 
@@ -141,7 +139,7 @@ namespace ERPApplication
                 }
                 else
                 {
-                    richTextBox.AppendText("No: " + employee.No + "\n");
+                    richTextBox.AppendText("Employee ID: " + employee.No + "\n");
                     richTextBox.AppendText("First Name: " + employee.FirstName + "\n");
                     richTextBox.AppendText("Last Name: " + employee.LastName + "\n");
                     richTextBox.AppendText("Job Title: " + employee.JobTitle + "\n");

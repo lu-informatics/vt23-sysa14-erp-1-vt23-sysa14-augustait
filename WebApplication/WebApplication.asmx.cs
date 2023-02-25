@@ -35,6 +35,8 @@ namespace WebApplication
             return employee;
         }
 
+        
+
         [WebMethod(Description = "Returns the number of all tables in the database! ")]
 
         public int GetTableCount()
@@ -65,14 +67,29 @@ namespace WebApplication
         [WebMethod(Description = "Create an Employee with this button! ")]
         public void AddEmployee(string no, string firstName, string lastName, string jobTitle, string city)
         {
-            Employee employee = new Employee();
-            employee.No = no;
-            employee.FirstName = firstName;
-            employee.LastName = lastName;
-            employee.JobTitle = jobTitle;
-            employee.City = city;
+            try
+            {
+                
+                if (string.IsNullOrWhiteSpace(no) || string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName) || string.IsNullOrWhiteSpace(jobTitle) || string.IsNullOrWhiteSpace(city))
+                {
+                    throw new ArgumentException("One or more required fields are missing.");
+                }
 
-            DAL.DataAccessLayer.CreateEmployee(employee);
+                Employee employee = new Employee();
+                employee.No = no;
+                employee.FirstName = firstName;
+                employee.LastName = lastName;
+                employee.JobTitle = jobTitle;
+                employee.City = city;
+
+                DataAccessLayer.CreateEmployee(employee);
+                
+            }
+            catch (Exception ex)
+            {
+              
+                throw new Exception("An error occurred while creating the employee. Please try again later.", ex);
+            }
         }
 
         [WebMethod(Description = "Delete an Employee with this button! ")]
