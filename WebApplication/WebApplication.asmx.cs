@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web;
 using System.Web.Services;
 using WebApplication.DAL;
@@ -78,10 +79,8 @@ namespace WebApplication
         public void DeleteEmployee(string no)
         {
 
-
             DAL.DataAccessLayer.DeleteEmployee(no);
-
-
+            
         }
 
         [WebMethod(Description = "Update an Employee with this button! ")]

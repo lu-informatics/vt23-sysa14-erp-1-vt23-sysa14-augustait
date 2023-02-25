@@ -254,6 +254,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "CRONUS Sverige AB";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
