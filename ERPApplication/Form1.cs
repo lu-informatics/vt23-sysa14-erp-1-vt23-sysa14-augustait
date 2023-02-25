@@ -18,15 +18,34 @@ namespace ERPApplication
 
         public Form1()
         {
-            
             InitializeComponent();
-
             var endpointConfiguration = WebApplicationSoapClient.EndpointConfiguration.WebApplicationSoap;
             _webServiceClient = new(endpointConfiguration);
+            
+        }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
             RefreshComboBox();
             comboBoxEmpId.SelectedIndex = -1;
         }
+
+
+
+        private void ClearAllTextBox() {
+            List<TextBox> list = new List<TextBox>();
+            list.Add(textBoxFirstName);
+            list.Add(textBoxLastName);
+            list.Add(textBoxJobTitle);
+            list.Add(textBoxCity);
+            
+
+            foreach (TextBox tb in list)
+            {
+                tb.Text = ("");
+            }
+        }
+    
 
         private void RefreshComboBox()
         {
@@ -69,12 +88,17 @@ namespace ERPApplication
                 if (existingEmployee != null)
                 {
                     richTextBox.Text = "Employee with Employee ID: " + empId + " already exists! Please specify a new one in order to create an Employee!.";
+                    comboBoxEmpId.SelectedIndex = -1;
+                    comboBoxEmpId.Text = "";
                     return;
                 }
 
                 _webServiceClient.AddEmployee(empId, firstName, lastName, jobTitle, city);
                 MessageBox.Show("Employee with ID: " + empId + " has been added successfully!");
                 RefreshComboBox();
+                ClearAllTextBox();
+                comboBoxEmpId.Text = "";
+                comboBoxEmpId.SelectedIndex = -1;
                 
 
             }
@@ -86,23 +110,28 @@ namespace ERPApplication
 
         private void FindEmployee_Click(object sender, EventArgs e)
         {
-            try
-            {
+            
+                
                 richTextBox.Text = "";
                 string employeeNo = "";
                 if (comboBoxEmpId.SelectedItem != null)
                 {
                     employeeNo = comboBoxEmpId.SelectedItem.ToString();
+                    comboBoxEmpId.SelectedIndex = -1;
                 }
                 else if (!string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
                 {
                     employeeNo = comboBoxEmpId.Text;
+                    comboBoxEmpId.Text = "";
                 }
                 else
                 {
                     richTextBox.Text = "Please either select or enter an Employee ID to find!";
                     return;
                 }
+
+            try
+            {
 
                 Employee employee = _webServiceClient.GetEmployeeByNo(employeeNo);
 
@@ -117,6 +146,8 @@ namespace ERPApplication
                     richTextBox.AppendText("Last Name: " + employee.LastName + "\n");
                     richTextBox.AppendText("Job Title: " + employee.JobTitle + "\n");
                     richTextBox.AppendText("City: " + employee.City + "\n");
+                    ClearAllTextBox();
+                    
                 }
             }
             catch (System.ServiceModel.FaultException)
@@ -124,7 +155,6 @@ namespace ERPApplication
                 richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
             }
         }
-
 
 
         private void DeleteEmployee_Click(object sender, EventArgs e)
@@ -155,7 +185,7 @@ namespace ERPApplication
 
                     if (existingEmployee == null)
                     {
-                        MessageBox.Show("Employee with ID: " + empId + " doesn't exist! Please specify an ID that exists!");
+                        richTextBox.Text = "Employee with ID: " + empId + " doesn't exist! Please specify an ID that exists!";
                         comboBoxEmpId.Text = "";
                     }
                     else
@@ -164,6 +194,7 @@ namespace ERPApplication
                         MessageBox.Show("Employee with ID: " + empId + " has been deleted successfully!");
                         RefreshComboBox();
                         comboBoxEmpId.SelectedIndex = -1;
+                        ClearAllTextBox();
                 }
                 }
                 catch (System.ServiceModel.FaultException)
@@ -210,7 +241,7 @@ namespace ERPApplication
 
                     if (existingEmployee == null)
                     {
-                        MessageBox.Show("Employee with ID: " + empId + " doesn't exist! Please specify an ID that exists!");
+                        richTextBox.Text = "Employee with ID: " + empId + " doesn't exist! Please specify an ID that exists in order to update the Employee!";
                         comboBoxEmpId.Text = "";
                     }
                     else
@@ -218,7 +249,8 @@ namespace ERPApplication
                         _webServiceClient.UpdateEmployee(empId, firstName, lastName, jobTitle, city);
                         MessageBox.Show("Employee with ID: " + empId + " has been updated successfully!");
                         comboBoxEmpId.SelectedIndex = -1;
-                        //Lägg in att alla andra fälten rensas!
+                        comboBoxEmpId.Text = "";
+                        ClearAllTextBox();
                     }
                 }
                 catch (System.ServiceModel.FaultException)
