@@ -277,7 +277,6 @@ namespace ERPApplication
             {
                 List<string> columnNames = _webServiceClient.GetItemTableColumnNames().ToList();
 
-                // Add column names to the RichTextBox
                 richTextBox.Clear();
                 richTextBox.AppendText("Names of all columns in the CRONUS Sverige AB$Item table:\n\n");
                 foreach (string columnName in columnNames)
@@ -304,7 +303,6 @@ namespace ERPApplication
             {
                 List<string> constraintNames = _webServiceClient.GetPrimaryKeyConstraints().ToList();
 
-                // Display constraint names in RichTextBox
                 richTextBox.Clear();
                 richTextBox.Text = "Names of all the primary key constraints in the database: \n\n";
                 foreach (string constraintName in constraintNames)
