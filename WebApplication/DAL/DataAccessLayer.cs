@@ -1,9 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics.Contracts;
+using System.EnterpriseServices;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
+using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Caching;
+using System.Web.Security;
+using System.Web.Services.Description;
+using System.Web.UI.WebControls;
 using System.Xml.Linq;
 
 namespace WebApplication.DAL
@@ -120,19 +130,22 @@ namespace WebApplication.DAL
         {
             using (SqlConnection connection = ConnectionHandler.GetSqlServerConnection())
             {
-                connection.Open();
+                connection.Open(); 
+            
+                string query = "INSERT INTO [CRONUS Sverige AB$Employee] ([No_], [First Name], [Last Name], [Job Title], [City]," +
+            " [Middle Name], [Initials], [Search Name], [Address 2], [Post Code], " +
+            " [County], [Phone No_], [Mobile Phone No_], [Address], [E-Mail], " +
+            " [Alt_ Address Code], [Alt_ Address Start Date], [Alt_ Address End Date], [Birth Date], " +
+            " [Sex], [Social Security No_], [Picture], [Union Code], [Manager No_], [Union Membership No_], [Extension], [Title], [No_ Series], [Resource No_], " +
+            " [Global Dimension 1 Code], [Global Dimension 2 Code], [Termination Date], [Inactive Date], [Employment Date], [Statistics Group Code], " +
+            " [Emplymt_ Contract Code], [Status], [Cause of Inactivity Code], [Grounds for Term_ Code], [Last Date Modified], [Pager], [Fax No_], [Company E-Mail], " +
+            " [Salespers__Purch_ Code], [Country_Region Code]) " +
+         
+            " VALUES (@No_, @FirstName, @LastName, @JobTitle, @City, 'AJE', 'AJD', 'AJB', 'AJK', 'AJA'," +
+                    " 'AJO', 'AJR', 'HR', 'CRO', 'AJ@gmail.com', 1, '2023-02-16', '2023-02-16', '2023-02-16', 1, 'DA', 'KA', 'HU', 'KO', 'LE', 'PE', 'LA', 'AJÖ', 'AJÄ', 'AJE', 'AJ'," +
+                    " '2023-02-16', '2023-02-16', '2023-02-16', 'AJJJJJJ', 1, 1, 1, 1, '2023-02-16', 'AJ', 1, 'AJ', 1, 1)";
 
-                string query = "INSERT INTO [CRONUS Sverige AB$Employee] ([No_], [First Name], [Last Name], [Job Title], [City], " +
-                    " [Middle Name], [Initials], [Search Name], [Address 2], " +
-                    " [Post Code], [County], [Phone No_], [Mobile Phone No_], [Address], " +
-                    " [E-Mail], [Alt_ Address Code], [Alt_ Address Start Date], [Alt_ Address End Date], [Birth Date], " +
-                    " [Sex], [Social Security No_], [Picture], [Union Code], [Manager No_], " +
-                    " [Union Membership No_], [Extension], [Title], [No_ Series], " +
-                    " [Resource No_], [Global Dimension 1 Code], [Global Dimension 2 Code], [Termination Date], [Inactive Date], [Employment Date]," +
-                    " [Statistics Group Code], [Emplymt_ Contract Code], [Status], [Cause of Inactivity Code], [Grounds for Term_ Code], [Last Date Modified], [Pager], [Fax No_], [Company E-Mail], [Salespers__Purch_ Code]) " +
-
-                 "VALUES(@No_, @FirstName, @LastName, @JobTitle, @City, 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', '2023-02-16', '2023-02-16', '2023-02-16', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', 'AJ', '2023-02-16', '2023-02-16', '2023-02-16', 'AJ', 'AJ', 1, 'AJ', 'AJ', '2023-02-16', 'AJ', 'AJ', 'AJ@gmail.com', 'AJ')";
-
+                
                 var command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@No_", employee.No);
                 command.Parameters.AddWithValue("@FirstName", employee.FirstName);
