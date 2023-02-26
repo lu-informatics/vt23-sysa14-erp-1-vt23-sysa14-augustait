@@ -59,9 +59,9 @@ namespace ERPApplication
             
         }
 
+        // CREATE EMPLOYEE
         private void CreateEmployee_Click(object sender, EventArgs e)
         {
-            
             richTextBox.Text = "";
 
             string empId = comboBoxEmpId.Text;
@@ -97,40 +97,41 @@ namespace ERPApplication
                 ClearAllTextBox();
                 comboBoxEmpId.Text = "";
                 comboBoxEmpId.SelectedIndex = -1;
-                
-
             }
-            catch (System.ServiceModel.FaultException)
+            catch (System.ServiceModel.FaultException ex)
             {
-                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database.";
+                richTextBox.Text = "An error occurred while calling the web service: " + ex.Message;
+            }
+            catch (System.ServiceModel.CommunicationException ex)
+            {
+                richTextBox.Text = "A communication error occurred while calling the web service: " + ex.Message;
             }
         }
 
+        // FIND EMPLOYEE
+
         private void FindEmployee_Click(object sender, EventArgs e)
         {
-            
-                
-                richTextBox.Text = "";
-                string employeeNo = "";
-                if (comboBoxEmpId.SelectedItem != null)
-                {
-                    employeeNo = comboBoxEmpId.SelectedItem.ToString();
-                    comboBoxEmpId.SelectedIndex = -1;
-                }
-                else if (!string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
-                {
-                    employeeNo = comboBoxEmpId.Text;
-                    comboBoxEmpId.Text = "";
-                }
-                else
-                {
-                    richTextBox.Text = "Please either select or enter an Employee ID to find!";
-                    return;
-                }
+            richTextBox.Text = "";
+            string employeeNo = "";
+            if (comboBoxEmpId.SelectedItem != null)
+            {
+                employeeNo = comboBoxEmpId.SelectedItem.ToString();
+                comboBoxEmpId.SelectedIndex = -1;
+            }
+            else if (!string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
+            {
+                employeeNo = comboBoxEmpId.Text;
+                comboBoxEmpId.Text = "";
+            }
+            else
+            {
+                richTextBox.Text = "Please either select or enter an Employee ID to find!";
+                return;
+            }
 
             try
             {
-
                 Employee employee = _webServiceClient.GetEmployeeByNo(employeeNo);
 
                 if (employee == null)
@@ -145,19 +146,22 @@ namespace ERPApplication
                     richTextBox.AppendText("Job Title: " + employee.JobTitle + "\n");
                     richTextBox.AppendText("City: " + employee.City + "\n");
                     ClearAllTextBox();
-                    
                 }
             }
             catch (System.ServiceModel.FaultException)
             {
-                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database.";
+            }
+            catch (System.ServiceModel.CommunicationException)
+            {
+                richTextBox.Text = "A communication error occurred while calling the web service. Check your network connection and try again.";
             }
         }
 
 
+        // DELETE EMPLOYEE
         private void DeleteEmployee_Click(object sender, EventArgs e)
         {
-            
             richTextBox.Text = "";
             string empId = "";
 
@@ -168,42 +172,45 @@ namespace ERPApplication
             else if (!string.IsNullOrWhiteSpace(comboBoxEmpId.Text))
             {
                 empId = comboBoxEmpId.Text;
-            
-         }
-             else
-              {
-                  richTextBox.Text = "Please either select or enter an Employee ID to remove!";
-                   return;
-                 }
+            }
+            else
+            {
+                richTextBox.Text = "Please either select or enter an Employee ID to remove!";
+                return;
+            }
 
-    
-                try
+            try
+            {
+                Employee existingEmployee = _webServiceClient.GetEmployeeByNo(empId);
+
+                if (existingEmployee == null)
                 {
-                    Employee existingEmployee = _webServiceClient.GetEmployeeByNo(empId);
-
-                    if (existingEmployee == null)
-                    {
-                        richTextBox.Text = "Employee with ID: " + empId + " doesn't exist! Please specify an ID that exists!";
-                        comboBoxEmpId.Text = "";
-                    }
-                    else
-                    {
+                    richTextBox.Text = "Employee with ID: " + empId + " doesn't exist! Please specify an ID that exists!";
+                    comboBoxEmpId.Text = "";
+                }
+                else
+                {
                     _webServiceClient.DeleteEmployee(empId);
-                        MessageBox.Show("Employee with ID: " + empId + " has been deleted successfully!");
-                        RefreshComboBox();
-                        comboBoxEmpId.SelectedIndex = -1;
-                        ClearAllTextBox();
+                    MessageBox.Show("Employee with ID: " + empId + " has been deleted successfully!");
+                    RefreshComboBox();
+                    comboBoxEmpId.SelectedIndex = -1;
+                    ClearAllTextBox();
                 }
-                }
-                catch (System.ServiceModel.FaultException)
-                {
-                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
             }
+            catch (System.ServiceModel.FaultException ex)
+            {
+                richTextBox.Text = "An error occurred while calling the web service: " + ex.Message;
             }
+            catch (System.ServiceModel.CommunicationException ex)
+            {
+                richTextBox.Text = "A communication error occurred while calling the web service: " + ex.Message;
+            }
+        }
+
+
 
         private void UpdateEmployee_Click(object sender, EventArgs e)
         {
-
             richTextBox.Text = "";
             string empId = "";
 
@@ -251,85 +258,109 @@ namespace ERPApplication
                         ClearAllTextBox();
                     }
                 }
-                catch (System.ServiceModel.FaultException)
+                catch (System.ServiceModel.FaultException ex)
                 {
-                    richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
+                    richTextBox.Text = "An error occurred while updating the employee with ID: " + empId + ". Error message: " + ex.Message;
+                }
+                catch (System.ServiceModel.CommunicationException)
+                {
+                    richTextBox.Text = "A communication error occurred while updating the employee with ID: " + empId + ". Please check your network connection and try again.";
                 }
             }
         }
+
+        // Names of all columns in the CRONUS Sverige AB$Item table
 
         private void NamesOfAllColumns_Click(object sender, EventArgs e)
         {
             try
             {
-            List<string> columnNames = _webServiceClient.GetItemTableColumnNames().ToList();
+                List<string> columnNames = _webServiceClient.GetItemTableColumnNames().ToList();
 
-            // Add column names to the RichTextBox
-            richTextBox.Clear();
-            richTextBox.AppendText("Names of all columns in the CRONUS Sverige AB$Item table:\n\n"); 
-            foreach (string columnName in columnNames)
-            {
-                richTextBox.AppendText(columnName + "\n");
-            }
+                // Add column names to the RichTextBox
+                richTextBox.Clear();
+                richTextBox.AppendText("Names of all columns in the CRONUS Sverige AB$Item table:\n\n");
+                foreach (string columnName in columnNames)
+                {
+                    richTextBox.AppendText(columnName + "\n");
+                }
             }
             catch (System.ServiceModel.FaultException)
             {
                 richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
             }
+            catch (System.ServiceModel.CommunicationException)
+            {
+                richTextBox.Text = "A communication error occurred while calling the web service. Please try again later.";
+            }
         }
+
+        // Names of all primary key constraints in the database
+
 
         private void AllPrimaryKeys_Click(object sender, EventArgs e)
         {
             try
             {
-                
-            List<string> constraintNames = _webServiceClient.GetPrimaryKeyConstraints().ToList();
+                List<string> constraintNames = _webServiceClient.GetPrimaryKeyConstraints().ToList();
 
-            // Display constraint names in RichTextBox
-            richTextBox.Clear();
-            richTextBox.Text = "Names of all the primary key constraints in the database: \n\n";
-            foreach (string constraintName in constraintNames)
+                // Display constraint names in RichTextBox
+                richTextBox.Clear();
+                richTextBox.Text = "Names of all the primary key constraints in the database: \n\n";
+                foreach (string constraintName in constraintNames)
+                {
+                    richTextBox.AppendText(constraintName + "\n");
+                }
+            }
+            catch (System.ServiceModel.FaultException ex)
             {
-                richTextBox.AppendText(constraintName + "\n");
+                richTextBox.Text = "An error occurred while calling the web service: " + ex.Message;
+            }
+            catch (System.ServiceModel.CommunicationException ex)
+            {
+                richTextBox.Text = "A communication error occurred while calling the web service: " + ex.Message;
             }
         }
-        catch (System.ServiceModel.FaultException)
-            {
-                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
-            }
-}
-    
 
+
+        // Total number of tables in the database
 
         private void TotalNumberOfTables_Click(object sender, EventArgs e)
         {
             try
             {
-               
-            int tableCount = _webServiceClient.GetTableCount();
-            richTextBox.Clear();
-            richTextBox.AppendText($"Total number of tables in the database: {tableCount}");
-
+                int tableCount = _webServiceClient.GetTableCount();
+                richTextBox.Clear();
+                richTextBox.AppendText($"Total number of tables in the database: {tableCount}");
             }
             catch (System.ServiceModel.FaultException)
             {
-                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database.";
+            }
+            catch (System.ServiceModel.CommunicationException)
+            {
+                richTextBox.Text = "An error occurred while communicating with the web service. Please try again later.";
             }
         }
+
+        // Total number of columns in the database
 
 
         private void TotalNumberOfColumns(object sender, EventArgs e)
         {
             try
             {
-         
-            int columnCount = _webServiceClient.GetColumnCount();
-            richTextBox.Clear();
-            richTextBox.AppendText($"The total number of columns in the database is: {columnCount}\n");
-        }
+                int columnCount = _webServiceClient.GetColumnCount();
+                richTextBox.Clear();
+                richTextBox.AppendText($"The total number of columns in the database is: {columnCount}\n");
+            }
             catch (System.ServiceModel.FaultException)
             {
-                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database. ";
+                richTextBox.Text = "An error occurred while calling the web service. Check your connection to the database.";
+            }
+            catch (System.ServiceModel.CommunicationException)
+            {
+                richTextBox.Text = "A communication error occurred while calling the web service. Please try again later.";
             }
         }
     }
